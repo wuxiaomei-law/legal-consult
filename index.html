@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph for WeChat sharing -->
+<meta property="og:title" content="吴晓梅律师 · 专业法律顾问服务">
+<meta property="og:description" content="执业十余年，专注跨境贸易全链路法律服务。跨境物流、海事海商、国际贸易、保险理赔、数据合规、低空经济、美国制裁合规。">
+<meta property="og:image" content="https://legal-consult-1436174324.cos.ap-guangzhou.myqcloud.com/og-cover.png">
+<meta property="og:url" content="https://legal-consult-1436174324.cos-website.ap-guangzhou.myqcloud.com">
+<meta property="og:type" content="website">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<title>吴晓梅律师 · 专业法律顾问服务</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: #f5f4f0; color: #2c2c2a; font-size: 14px; line-height: 1.7; }
+
+  /* Hero */
+  .hero { background: #2c2c2a; color: #fff; padding: 56px 24px 48px; text-align: center; }
+  .hero-badge { display: inline-block; background: #534AB7; color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 0.5px; }
+  .hero h1 { font-size: 26px; font-weight: 500; margin-bottom: 10px; line-height: 1.35; }
+  .hero p { font-size: 14px; color: #b4b2a9; max-width: 520px; margin: 0 auto 28px; line-height: 1.8; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
+  .hero-tag { background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #d3d1c7; }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: #534AB7; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 500; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn-primary:hover { background: #3C3489; }
+  .btn-outline { background: transparent; color: #fff; border: 0.5px solid rgba(255,255,255,0.4); padding: 12px 28px; border-radius: 8px; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.8); }
+
+  /* Stats bar */
+  .stats { display: flex; justify-content: center; gap: 0; background: #fff; border-bottom: 0.5px solid #e8e6df; }
+  .stat-item { flex: 1; max-width: 160px; padding: 18px 12px; text-align: center; border-right: 0.5px solid #e8e6df; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: 22px; font-weight: 500; color: #534AB7; }
+  .stat-label { font-size: 11px; color: #888780; margin-top: 2px; }
+
+  /* Section */
+  .section { padding: 40px 24px; max-width: 720px; margin: 0 auto; }
+  .section-title { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .section-sub { font-size: 13px; color: #888780; margin-bottom: 24px; }
+
+  /* Plans */
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px; }
+  .plan-card { background: #fff; border: 0.5px solid #e8e6df; border-radius: 12px; padding: 24px; position: relative; }
+  .plan-card.featured { border: 1.5px solid #534AB7; }
+  .plan-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #534AB7; color: #fff; font-size: 11px; padding: 3px 12px; border-radius: 20px; white-space: nowrap; }
+  .plan-name { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .plan-price { font-size: 24px; font-weight: 500; color: #534AB7; margin-bottom: 4px; }
+  .plan-price span { font-size: 13px; color: #888780; font-weight: 400; }
+  .plan-desc { font-size: 12px; color: #888780; margin-bottom: 16px; }
+  .plan-features { list-style: none; }
+  .plan-features li { font-size: 13px; padding: 6px 0; border-bottom: 0.5px solid #f1efe8; display: flex; align-items: flex-start; gap: 8px; }
+  .plan-features li:last-child { border-bottom: none; }
+  .plan-features li::before { content: '✓'; width: 16px; height: 16px; background: #EAF3DE; color: #3B6D11; font-size: 10px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .plan-btn { display: block; text-align: center; margin-top: 20px; padding: 10px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+  .plan-btn-outline { border: 0.5px solid #534AB7; color: #534AB7; background: transparent; }
+  .plan-btn-outline:hover { background: #EEEDFE; }
+  .plan-btn-fill { background: #534AB7; color: #fff; border: none; }
+  .plan-btn-fill:hover { background: #3C3489; }
+
+  /* AI Chat */
+  .chat-section { background: #fff; border-radius: 16px; border: 0.5px solid #e8e6df; overflow: hidden; }
+  .chat-header { background: #2c2c2a; color: #fff; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+  .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: #534AB7; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; flex-shrink: 0; }
+  .chat-header-info .name { font-size: 14px; font-weight: 500; }
+  .chat-header-info .status { font-size: 11px; color: #9FE1CB; }
+  .chat-body { padding: 20px; min-height: 280px; max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #fafaf8; }
+  .msg { max-width: 80%; }
+  .msg-ai { align-self: flex-start; }
+  .msg-user { align-self: flex-end; }
+  .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
+  .msg-ai .msg-bubble { background: #fff; border: 0.5px solid #e8e6df; border-radius: 4px 12px 12px 12px; }
+  .msg-user .msg-bubble { background: #534AB7; color: #fff; border-radius: 12px 4px 12px 12px; }
+  .msg-time { font-size: 11px; color: #b4b2a9; margin-top: 4px; text-align: right; }
+  .msg-ai .msg-time { text-align: left; }
+  .chat-input-area { padding: 12px 16px; border-top: 0.5px solid #e8e6df; display: flex; gap: 8px; background: #fff; }
+  .chat-input { flex: 1; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 10px 14px; font-size: 13px; outline: none; font-family: inherit; resize: none; background: #fff; color: #2c2c2a; }
+  .chat-input:focus { border-color: #534AB7; }
+  .chat-send { background: #534AB7; color: #fff; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: background 0.2s; }
+  .chat-send:hover { background: #3C3489; }
+  .chat-voice { background: transparent; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 10px 12px; font-size: 16px; cursor: pointer; color: #5F5E5A; transition: all 0.15s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .chat-voice:hover { border-color: #534AB7; color: #534AB7; }
+  .chat-voice.recording { background: #FCEBEB; border-color: #E24B4A; color: #E24B4A; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+  .quick-questions { padding: 12px 16px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .quick-q { border: 0.5px solid #d3d1c7; background: transparent; border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #5F5E5A; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .quick-q:hover { border-color: #534AB7; color: #534AB7; background: #EEEDFE; }
+  .typing-indicator { display: none; align-items: center; gap: 4px; padding: 8px 14px; background: #fff; border: 0.5px solid #e8e6df; border-radius: 4px 12px 12px 12px; max-width: fit-content; }
+  .typing-indicator.show { display: flex; }
+  .dot { width: 6px; height: 6px; background: #888780; border-radius: 50%; animation: bounce 1.2s infinite; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+  /* Lead form */
+  .lead-section { background: #EEEDFE; border-radius: 16px; padding: 28px 24px; }
+  .lead-section h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .lead-section p { font-size: 13px; color: #5F5E5A; margin-bottom: 20px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-full { grid-column: 1 / -1; }
+  .form-group label { display: block; font-size: 12px; color: #5F5E5A; margin-bottom: 4px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; border: 0.5px solid #AFA9EC; border-radius: 8px; padding: 10px 14px; font-size: 13px; outline: none; font-family: inherit; background: #fff; color: #2c2c2a; transition: border-color 0.15s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #534AB7; }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-submit { margin-top: 16px; width: 100%; background: #534AB7; color: #fff; border: none; padding: 13px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .form-submit:hover { background: #3C3489; }
+  .form-privacy { font-size: 11px; color: #888780; margin-top: 10px; text-align: center; }
+  .form-success { display: none; text-align: center; padding: 24px; }
+  .form-success .icon { font-size: 40px; margin-bottom: 12px; }
+  .form-success h4 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .form-success p { font-size: 13px; color: #5F5E5A; }
+
+  /* WeChat QR */
+  .wechat-cta { text-align: center; margin-top: 24px; padding: 20px; background: #fff; border: 0.5px solid #e8e6df; border-radius: 12px; }
+  .wechat-cta h4 { font-size: 14px; font-weight: 500; margin-bottom: 8px; color: #2c2c2a; }
+  .wechat-cta p { font-size: 12px; color: #5F5E5A; margin-bottom: 12px; }
+  .wechat-qr { width: 140px; height: 140px; margin: 0 auto 8px; background: #f5f4f0; border: 0.5px solid #e8e6df; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #888780; }
+  .wechat-qr-tip { font-size: 11px; color: #534AB7; font-weight: 500; }
+
+  /* Fields */
+  .fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .field-card { background: #fff; border: 0.5px solid #e8e6df; border-radius: 10px; padding: 16px; text-align: center; }
+  .field-icon { font-size: 22px; margin-bottom: 8px; }
+  .field-name { font-size: 13px; font-weight: 500; }
+  .field-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+
+  /* Process */
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 0.5px solid #f1efe8; }
+  .process-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #EEEDFE; color: #534AB7; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .step-content .step-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .step-content .step-desc { font-size: 13px; color: #5F5E5A; }
+
+  /* Footer */
+  .footer { background: #2c2c2a; color: #888780; text-align: center; padding: 24px; font-size: 12px; }
+  .footer a { color: #b4b2a9; text-decoration: none; }
+  .footer .disclaimer { font-size: 11px; color: #5F5E5A; max-width: 520px; margin: 8px auto 0; line-height: 1.6; }
+  .footer .law-info { font-size: 11px; color: #9FE1CB; margin-top: 6px; }
+
+  /* Nav */
+  .nav { background: #fff; border-bottom: 0.5px solid #e8e6df; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .nav-left { display: flex; align-items: center; gap: 16px; }
+  .nav-logo { font-size: 15px; font-weight: 500; color: #2c2c2a; }
+  .nav-logo span { color: #534AB7; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-cta { background: #534AB7; color: #fff; border: none; padding: 8px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 500; transition: background 0.2s; }
+  .nav-cta:hover { background: #3C3489; }
+  .lang-btn { border: 0.5px solid #d3d1c7; background: transparent; border-radius: 6px; padding: 6px 12px; font-size: 12px; color: #5F5E5A; cursor: pointer; font-family: inherit; font-weight: 500; transition: all 0.15s; }
+  .lang-btn:hover { border-color: #534AB7; color: #534AB7; }
+  .lang-btn.active { background: #534AB7; color: #fff; border-color: #534AB7; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #2c2c2a; color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 13px; display: none; z-index: 999; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 22px; }
+    .stats { flex-wrap: wrap; }
+    .stat-item { min-width: 80px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <div class="nav-logo" data-i18n="navLogo">吴晓梅<span>律师</span></div>
+  </div>
+  <div class="nav-right">
+    <button class="lang-btn active" id="langZh" onclick="switchLang('zh')">中</button>
+    <button class="lang-btn" id="langEn" onclick="switchLang('en')">EN</button>
+    <button class="nav-cta" onclick="scrollToSection('consult')" data-i18n="navCta">立即咨询</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge" data-i18n="heroBadge">执业十余年 · 专注民商法</div>
+  <h1 data-i18n="heroTitle">企业法律风险，<br>交给专业的人来处理</h1>
+  <p data-i18n="heroSub">跨境物流 · 海事海商 · 国际贸易 · 涉外保险 · 低空经济 · 数据合规 · 税务</p>
+  <div class="hero-tags">
+    <span class="hero-tag" data-i18n="tag1">美国制裁合规</span>
+    <span class="hero-tag" data-i18n="tag2">跨境合同审查</span>
+    <span class="hero-tag" data-i18n="tag3">海事纠纷处理</span>
+    <span class="hero-tag" data-i18n="tag4">保险理赔争议</span>
+    <span class="hero-tag" data-i18n="tag5">数据出境合规</span>
+    <span class="hero-tag" data-i18n="tag6">低空经济法律</span>
+    <span class="hero-tag" data-i18n="tag7">跨境税务合规</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#consult" class="btn-primary" onclick="scrollToSection('consult')" data-i18n="heroCta1">免费提问 ↗</a>
+    <a href="#plans" class="btn-outline" onclick="scrollToSection('plans')" data-i18n="heroCta2">查看服务方案</a>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">10+</div>
+    <div class="stat-label" data-i18n="statYears">执业年限</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">7</div>
+    <div class="stat-label" data-i18n="statFields">专注领域</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">500+</div>
+    <div class="stat-label" data-i18n="statClients">服务企业</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24h</div>
+    <div class="stat-label" data-i18n="statResponse">响应承诺</div>
+  </div>
+</div>
+
+<!-- Fields -->
+<section class="section">
+  <div class="section-title" data-i18n="fieldsTitle">专注七大领域</div>
+  <div class="section-sub" data-i18n="fieldsSub">深耕涉外民商法，为企业提供专业风险防控</div>
+  <div class="fields-grid">
+    <div class="field-card"><div class="field-icon">🚢</div><div class="field-name" data-i18n="f1name">跨境物流</div><div class="field-sub" data-i18n="f1sub">货运合同 / 货损索赔</div></div>
+    <div class="field-card"><div class="field-icon">⚓</div><div class="field-name" data-i18n="f2name">海事海商</div><div class="field-sub" data-i18n="f2sub">船舶碰撞 / 海难救助</div></div>
+    <div class="field-card"><div class="field-icon">🛡️</div><div class="field-name" data-i18n="f3name">涉外保险</div><div class="field-sub" data-i18n="f3sub">保险理赔 / 保险合同</div></div>
+    <div class="field-card"><div class="field-icon">🌐</div><div class="field-name" data-i18n="f4name">国际贸易</div><div class="field-sub" data-i18n="f4sub">制裁合规 / 合同审查</div></div>
+    <div class="field-card"><div class="field-icon">🚁</div><div class="field-name" data-i18n="f5name">低空经济</div><div class="field-sub" data-i18n="f5sub">无人机 / 航空法规</div></div>
+    <div class="field-card"><div class="field-icon">🔒</div><div class="field-name" data-i18n="f6name">数据合规</div><div class="field-sub" data-i18n="f6sub">数据出境 / 隐私保护</div></div>
+    <div class="field-card"><div class="field-icon">💰</div><div class="field-name" data-i18n="f7name">跨境税务</div><div class="field-sub" data-i18n="f7sub">BEPS合规 / 转让定价</div></div>
+  </div>
+</section>
+
+<!-- AI Chat -->
+<section class="section" id="consult">
+  <div class="section-title" data-i18n="chatTitle">智能法律问答</div>
+  <div class="section-sub" data-i18n="chatSub">先提问，了解基本情况后，我们再安排深度咨询</div>
+  <div class="chat-section">
+    <div class="chat-header">
+      <div class="chat-avatar">吴</div>
+      <div class="chat-header-info">
+        <div class="name" data-i18n="chatName">吴晓梅律师助手</div>
+        <div class="status" id="chatStatusDot" data-i18n="chatStatus">● 在线 · 免费咨询</div>
+      </div>
+    </div>
+    <div class="quick-questions">
+      <button class="quick-q" onclick="sendQuickQ(this)" data-i18n="qq1">美国制裁对我们的合同有影响吗？</button>
+      <button class="quick-q" onclick="sendQuickQ(this)" data-i18n="qq2">跨境货物货损如何索赔？</button>
+      <button class="quick-q" onclick="sendQuickQ(this)" data-i18n="qq3">数据出境需要哪些合规手续？</button>
+      <button class="quick-q" onclick="sendQuickQ(this)" data-i18n="qq4">跨境税务要注意哪些风险？</button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="msg msg-ai">
+        <div class="msg-bubble" id="welcomeMsg">您好！我是吴晓梅律师助手。涉及<strong>跨境物流、海事、保险、国际贸易、低空经济、数据合规、跨境税务</strong>的法律问题，欢迎直接提问。<br><br>您可以先描述一下您遇到的具体情况，我来告诉您大致的法律处理方向。</div>
+        <div class="msg-time">刚刚</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" data-i18n-placeholder="chatPlaceholder" placeholder="描述您的法律问题..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="chat-voice" id="voiceBtn" onclick="toggleVoice()" title="语音输入">🎙</button>
+      <button class="chat-send" onclick="sendMessage()" data-i18n="chatSend">发送</button>
+    </div>
+  </div>
+</section>
+
+<!-- Plans -->
+<section class="section" id="plans">
+  <div class="section-title" data-i18n="plansTitle">服务方案</div>
+  <div class="section-sub" data-i18n="plansSub">从免费智能问答到深度专项，按需选择</div>
+  <div class="plans">
+    <!-- Free -->
+    <div class="plan-card">
+      <div class="plan-name" data-i18n="p1name">免费智能问答</div>
+      <div class="plan-price">¥0 <span data-i18n="p1period">/ 免费</span></div>
+      <div class="plan-desc" data-i18n="p1desc">AI 24小时即时回复，了解法律方向，判断是否需要律师介入</div>
+      <ul class="plan-features">
+        <li data-i18n="p1f1">AI即时回复（秒级响应）</li>
+        <li data-i18n="p1f2">不限次数，问到满意为止</li>
+        <li data-i18n="p1f3">适用法律法规指引</li>
+        <li data-i18n="p1f4">复杂问题转人工提示</li>
+        <li data-i18n="p1f5">初步判断是否需要付费咨询</li>
+      </ul>
+      <a href="#consult" class="plan-btn plan-btn-outline" onclick="scrollToSection('consult')" data-i18n="p1btn">免费提问 →</a>
+    </div>
+
+    <!-- Single -->
+    <div class="plan-card featured">
+      <div class="plan-badge" data-i18n="p2badge">最易转化</div>
+      <div class="plan-name" data-i18n="p2name">单次专项咨询</div>
+      <div class="plan-price" style="font-size:16px;color:#888780;" data-i18n="p2price">价格面议</div>
+      <div class="plan-desc" data-i18n="p2desc">约1小时视频或电话，针对具体问题，出具书面意见摘要</div>
+      <ul class="plan-features">
+        <li data-i18n="p2f1">1小时视频/电话深度咨询</li>
+        <li data-i18n="p2f2">书面法律意见摘要（500字内）</li>
+        <li data-i18n="p2f3">操作建议3条以上</li>
+        <li data-i18n="p2f4">3日内1次免费追问</li>
+        <li data-i18n="p2f5">适用：合同签前判断 / 纠纷评估</li>
+      </ul>
+      <a href="#lead" class="plan-btn plan-btn-fill" onclick="scrollToSection('lead')" data-i18n="p2btn">预约咨询 →</a>
+    </div>
+
+    <!-- Deep -->
+    <div class="plan-card">
+      <div class="plan-name" data-i18n="p3name">深度专项咨询</div>
+      <div class="plan-price" style="font-size:16px;color:#888780;" data-i18n="p3price">价格面议</div>
+      <div class="plan-desc" data-i18n="p3desc">复杂案件全程跟进，合同全文审查，出具正式法律意见书</div>
+      <ul class="plan-features">
+        <li data-i18n="p3f1">不限时深度咨询（最多2次）</li>
+        <li data-i18n="p3f2">合同全文审查+批注</li>
+        <li data-i18n="p3f3">正式法律意见书（可盖章）</li>
+        <li data-i18n="p3f4">7日内无限追问</li>
+        <li data-i18n="p3f5">适用：大额合同审查 / 制裁合规方案</li>
+      </ul>
+      <a href="#lead" class="plan-btn plan-btn-outline" onclick="scrollToSection('lead')" data-i18n="p3btn">预约深度咨询 →</a>
+    </div>
+
+    <!-- Retainer -->
+    <div class="plan-card">
+      <div class="plan-name" data-i18n="p4name">常年法律顾问</div>
+      <div class="plan-price" style="font-size:16px;color:#888780;" data-i18n="p4price">价格面议</div>
+      <div class="plan-desc" data-i18n="p4desc">持续保障，打包定价，中小外贸企业首选，降低综合法律成本</div>
+      <ul class="plan-features">
+        <li data-i18n="p4f1">每月4次专项咨询（各1小时）</li>
+        <li data-i18n="p4f2">合同模板库使用（7大领域）</li>
+        <li data-i18n="p4f3">紧急问题24小时响应</li>
+        <li data-i18n="p4f4">季度法律风险体检报告</li>
+        <li data-i18n="p4f5">诉讼/仲裁代理8折 + 企业内训1次/年</li>
+      </ul>
+      <a href="#lead" class="plan-btn plan-btn-outline" onclick="scrollToSection('lead')" data-i18n="p4btn">了解详情 →</a>
+    </div>
+  </div>
+
+  <!-- WeChat QR CTA -->
+  <div class="wechat-cta" style="margin-top: 24px;">
+    <h4 data-i18n="wechatTitle">加微信，咨询更快</h4>
+    <p data-i18n="wechatDesc">扫码添加吴律师工作微信，工作日4小时内回复</p>
+    <div class="wechat-qr" id="wechatQr" style="padding:0;overflow:hidden;border:none;">
+      <img src="wechat-qr.jpg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="wechat-qr-tip" data-i18n="wechatTip">扫码备注"法律咨询"</div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section">
+  <div class="section-title" data-i18n="procTitle">服务流程</div>
+  <div class="section-sub" data-i18n="procSub">从提问到解决，四步走完</div>
+  <div style="background:#fff;border:0.5px solid #e8e6df;border-radius:12px;padding:8px 20px;">
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title" data-i18n="s1title">在线提问</div>
+          <div class="step-desc" data-i18n="s1desc">通过智能问答描述您的情况，系统自动分析法律属性</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title" data-i18n="s2title">留下联系方式</div>
+          <div class="step-desc" data-i18n="s2desc">填写简短表单，告知诉求和时间偏好</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title" data-i18n="s3title">律师确认预约</div>
+          <div class="step-desc" data-i18n="s3desc">吴律师团队24小时内与您确认咨询时间和方式</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title" data-i18n="s4title">咨询与方案交付</div>
+          <div class="step-desc" data-i18n="s4desc">专项咨询结束后提供书面建议，常年顾问持续跟进</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lead Form -->
+<section class="section" id="lead">
+  <div class="lead-section">
+    <h3 data-i18n="formTitle">预约咨询 / 留下联系方式</h3>
+    <p data-i18n="formDesc">填写以下信息，吴律师团队将在24小时内与您联系，确认咨询安排。</p>
+    <div id="leadForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label data-i18n="formName">您的姓名 *</label>
+          <input type="text" id="fname" data-i18n-placeholder="formNamePh" placeholder="张总 / 李女士">
+        </div>
+        <div class="form-group">
+          <label data-i18n="formPhone">手机号码 *</label>
+          <input type="tel" id="fphone" placeholder="138 0000 0000">
+        </div>
+        <div class="form-group">
+          <label data-i18n="formCompany">公司名称</label>
+          <input type="text" id="fcompany" data-i18n-placeholder="formCompanyPh" placeholder="选填，有助于背景了解">
+        </div>
+        <div class="form-group">
+          <label data-i18n="formType">咨询类型</label>
+          <select id="ftype">
+            <option value="" data-i18n="formTypeDefault">请选择</option>
+            <option data-i18n="formType1">跨境物流 / 货损索赔</option>
+            <option data-i18n="formType2">海事海商</option>
+            <option data-i18n="formType3">涉外保险</option>
+            <option data-i18n="formType4">国际贸易 / 制裁合规</option>
+            <option data-i18n="formType5">低空经济</option>
+            <option data-i18n="formType6">数据合规</option>
+            <option data-i18n="formType7">跨境税务</option>
+            <option data-i18n="formType8">其他</option>
+          </select>
+        </div>
+        <div class="form-group form-full">
+          <label data-i18n="formBrief">简述情况</label>
+          <textarea id="fdesc" data-i18n-placeholder="formBriefPh" placeholder="简要描述您遇到的问题或需求（选填）"></textarea>
+        </div>
+        <div class="form-group">
+          <label data-i18n="formContact">偏好联系方式</label>
+          <select id="fcontact">
+            <option data-i18n="formContact1">微信</option>
+            <option data-i18n="formContact2">电话</option>
+            <option data-i18n="formContact3">邮件</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="formTime">希望咨询时间</label>
+          <select id="ftime">
+            <option data-i18n="formTime1">工作日白天</option>
+            <option data-i18n="formTime2">工作日晚上</option>
+            <option data-i18n="formTime3">周末</option>
+            <option data-i18n="formTime4">尽快联系我</option>
+          </select>
+        </div>
+      </div>
+      <button class="form-submit" onclick="submitForm()" data-i18n="formSubmit">提交预约</button>
+      <div class="form-privacy" data-i18n="formPrivacy">您的信息仅用于咨询安排，不会对外共享或用于商业推广</div>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <div class="icon">✅</div>
+      <h4 data-i18n="formOk1">预约已提交！</h4>
+      <p data-i18n="formOk2">吴晓梅律师团队将在24小时内通过您偏好的方式与您联系。<br>感谢您的信任，期待为您提供专业帮助。</p>
+      <div class="wechat-cta" style="margin-top: 16px; background: #fff;">
+        <h4 data-i18n="formWechatTitle">如需更快响应，可加微信</h4>
+        <div class="wechat-qr" id="wechatQrForm" style="padding:0;overflow:hidden;border:none;">
+          <img src="wechat-qr.jpg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="wechat-qr-tip" data-i18n="wechatTip">扫码备注"法律咨询"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div data-i18n="footerMain">吴晓梅律师 · 专注涉外民商法 · 执业十余年</div>
+  <div class="law-info">广东法制盛邦律师事务所 | 执业证号：14401201811407532</div>
+  <div class="disclaimer" data-i18n="footerDisclaimer">本页面内容及AI问答仅供一般性法律信息参考，不构成正式法律意见。具体法律问题请以律师书面意见为准。</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── 国际化（中英文切换）──────────────────────────────────
+let currentLang = 'zh';
+
+const i18n = {
+  navLogo: { zh: '吴晓梅<span>律师</span>', en: 'Atty. Wu<span> Xiaomei</span>' },
+  navCta: { zh: '立即咨询', en: 'Consult Now' },
+  heroBadge: { zh: '执业十余年 · 专注民商法', en: '10+ Years Practice · Civil & Commercial Law' },
+  heroTitle: { zh: '企业法律风险，<br>交给专业的人来处理', en: 'Corporate Legal Risks?<br>Leave It to the Experts.' },
+  heroSub: { zh: '跨境物流 · 海事海商 · 国际贸易 · 涉外保险 · 低空经济 · 数据合规 · 税务', en: 'Cross-border Logistics · Maritime · Int\'l Trade · Insurance · Low-altitude Economy · Data Compliance · Tax' },
+  tag1: { zh: '美国制裁合规', en: 'US Sanctions Compliance' },
+  tag2: { zh: '跨境合同审查', en: 'Cross-border Contract Review' },
+  tag3: { zh: '海事纠纷处理', en: 'Maritime Dispute Resolution' },
+  tag4: { zh: '保险理赔争议', en: 'Insurance Claim Disputes' },
+  tag5: { zh: '数据出境合规', en: 'Data Export Compliance' },
+  tag6: { zh: '低空经济法律', en: 'Low-altitude Economy Law' },
+  tag7: { zh: '跨境税务合规', en: 'Cross-border Tax Compliance' },
+  heroCta1: { zh: '免费提问 ↗', en: 'Free Consultation ↗' },
+  heroCta2: { zh: '查看服务方案', en: 'View Service Plans' },
+  statYears: { zh: '执业年限', en: 'Years of Practice' },
+  statFields: { zh: '专注领域', en: 'Practice Areas' },
+  statClients: { zh: '服务企业', en: 'Clients Served' },
+  statResponse: { zh: '响应承诺', en: 'Response Guarantee' },
+  fieldsTitle: { zh: '专注七大领域', en: '7 Practice Areas' },
+  fieldsSub: { zh: '深耕涉外民商法，为企业提供专业风险防控', en: 'Specializing in cross-border civil & commercial law for enterprise risk management' },
+  f1name: { zh: '跨境物流', en: 'Cross-border Logistics' },
+  f1sub: { zh: '货运合同 / 货损索赔', en: 'Cargo Contracts / Damage Claims' },
+  f2name: { zh: '海事海商', en: 'Maritime & Admiralty' },
+  f2sub: { zh: '船舶碰撞 / 海难救助', en: 'Collision / Salvage' },
+  f3name: { zh: '涉外保险', en: 'Cross-border Insurance' },
+  f3sub: { zh: '保险理赔 / 保险合同', en: 'Claims / Policy Disputes' },
+  f4name: { zh: '国际贸易', en: 'International Trade' },
+  f4sub: { zh: '制裁合规 / 合同审查', en: 'Sanctions / Contract Review' },
+  f5name: { zh: '低空经济', en: 'Low-altitude Economy' },
+  f5sub: { zh: '无人机 / 航空法规', en: 'Drones / Aviation Law' },
+  f6name: { zh: '数据合规', en: 'Data Compliance' },
+  f6sub: { zh: '数据出境 / 隐私保护', en: 'Data Export / Privacy' },
+  f7name: { zh: '跨境税务', en: 'Cross-border Tax' },
+  f7sub: { zh: 'BEPS合规 / 转让定价', en: 'BEPS / Transfer Pricing' },
+  chatTitle: { zh: '智能法律问答', en: 'AI Legal Q&A' },
+  chatSub: { zh: '先提问，了解基本情况后，我们再安排深度咨询', en: 'Ask first, then we arrange in-depth consultation if needed' },
+  chatName: { zh: '吴晓梅律师助手', en: 'Atty. Wu\'s AI Assistant' },
+  chatStatus: { zh: '● 在线 · 免费咨询', en: '● Online · Free Consultation' },
+  qq1: { zh: '美国制裁对我们的合同有影响吗？', en: 'Do US sanctions affect our contracts?' },
+  qq2: { zh: '跨境货物货损如何索赔？', en: 'How to claim for cross-border cargo damage?' },
+  qq3: { zh: '数据出境需要哪些合规手续？', en: 'What compliance is needed for data export?' },
+  qq4: { zh: '跨境税务要注意哪些风险？', en: 'What cross-border tax risks should I watch for?' },
+  chatPlaceholder: { zh: '描述您的法律问题...', en: 'Describe your legal question...' },
+  chatSend: { zh: '发送', en: 'Send' },
+  plansTitle: { zh: '服务方案', en: 'Service Plans' },
+  plansSub: { zh: '从免费智能问答到深度专项，按需选择', en: 'From free AI Q&A to in-depth consulting, choose as needed' },
+  p1name: { zh: '免费智能问答', en: 'Free AI Q&A' },
+  p1period: { zh: '/ 免费', en: '/ Free' },
+  p1desc: { zh: 'AI 24小时即时回复，了解法律方向，判断是否需要律师介入', en: 'AI instant replies 24/7, understand legal direction, assess if you need a lawyer' },
+  p1f1: { zh: 'AI即时回复（秒级响应）', en: 'AI instant reply (seconds)' },
+  p1f2: { zh: '不限次数，问到满意为止', en: 'Unlimited questions until satisfied' },
+  p1f3: { zh: '适用法律法规指引', en: 'Applicable law & regulation guidance' },
+  p1f4: { zh: '复杂问题转人工提示', en: 'Complex issues flagged for human review' },
+  p1f5: { zh: '初步判断是否需要付费咨询', en: 'Initial assessment of need for paid consultation' },
+  p1btn: { zh: '免费提问 →', en: 'Free Q&A →' },
+  p2badge: { zh: '最易转化', en: 'Most Popular' },
+  p2name: { zh: '单次专项咨询', en: 'Single Consultation' },
+  p2price: { zh: '价格面议', en: 'Quote on Request' },
+  p2desc: { zh: '约1小时视频或电话，针对具体问题，出具书面意见摘要', en: '1-hour video/phone call, specific issue, written opinion summary' },
+  p2f1: { zh: '1小时视频/电话深度咨询', en: '1-hour video/phone consultation' },
+  p2f2: { zh: '书面法律意见摘要（500字内）', en: 'Written legal opinion summary (up to 500 words)' },
+  p2f3: { zh: '操作建议3条以上', en: '3+ actionable recommendations' },
+  p2f4: { zh: '3日内1次免费追问', en: '1 free follow-up within 3 days' },
+  p2f5: { zh: '适用：合同签前判断 / 纠纷评估', en: 'Best for: Pre-sign review / Dispute assessment' },
+  p2btn: { zh: '预约咨询 →', en: 'Book Now →' },
+  p3name: { zh: '深度专项咨询', en: 'In-depth Consultation' },
+  p3price: { zh: '价格面议', en: 'Quote on Request' },
+  p3desc: { zh: '复杂案件全程跟进，合同全文审查，出具正式法律意见书', en: 'Full case follow-up, complete contract review, formal legal opinion' },
+  p3f1: { zh: '不限时深度咨询（最多2次）', en: 'In-depth consultation (up to 2 sessions)' },
+  p3f2: { zh: '合同全文审查+批注', en: 'Full contract review with annotations' },
+  p3f3: { zh: '正式法律意见书（可盖章）', en: 'Formal legal opinion (stampable)' },
+  p3f4: { zh: '7日内无限追问', en: 'Unlimited follow-ups within 7 days' },
+  p3f5: { zh: '适用：大额合同审查 / 制裁合规方案', en: 'Best for: Major contracts / Sanctions compliance' },
+  p3btn: { zh: '预约深度咨询 →', en: 'Book In-depth →' },
+  p4name: { zh: '常年法律顾问', en: 'Retained Legal Counsel' },
+  p4price: { zh: '价格面议', en: 'Quote on Request' },
+  p4desc: { zh: '持续保障，打包定价，中小外贸企业首选，降低综合法律成本', en: 'Ongoing protection, packaged pricing, ideal for SME exporters' },
+  p4f1: { zh: '每月4次专项咨询（各1小时）', en: '4 consultations/month (1hr each)' },
+  p4f2: { zh: '合同模板库使用（7大领域）', en: 'Contract template library (7 areas)' },
+  p4f3: { zh: '紧急问题24小时响应', en: '24hr emergency response' },
+  p4f4: { zh: '季度法律风险体检报告', en: 'Quarterly legal risk health check' },
+  p4f5: { zh: '诉讼/仲裁代理8折 + 企业内训1次/年', en: '20% off litigation + 1 annual corporate training' },
+  p4btn: { zh: '了解详情 →', en: 'Learn More →' },
+  procTitle: { zh: '服务流程', en: 'How It Works' },
+  procSub: { zh: '从提问到解决，四步走完', en: 'From question to solution in 4 steps' },
+  s1title: { zh: '在线提问', en: 'Ask Online' },
+  s1desc: { zh: '通过智能问答描述您的情况，系统自动分析法律属性', en: 'Describe your situation via AI Q&A, system analyzes legal implications' },
+  s2title: { zh: '留下联系方式', en: 'Leave Contact Info' },
+  s2desc: { zh: '填写简短表单，告知诉求和时间偏好', en: 'Fill a short form with your needs and time preferences' },
+  s3title: { zh: '律师确认预约', en: 'Lawyer Confirms' },
+  s3desc: { zh: '吴律师团队24小时内与您确认咨询时间和方式', en: 'Our team confirms consultation time within 24 hours' },
+  s4title: { zh: '咨询与方案交付', en: 'Consult & Deliver' },
+  s4desc: { zh: '专项咨询结束后提供书面建议，常年顾问持续跟进', en: 'Written advice after consultation, ongoing support for retainers' },
+  formTitle: { zh: '预约咨询 / 留下联系方式', en: 'Book Consultation / Leave Contact Info' },
+  formDesc: { zh: '填写以下信息，吴律师团队将在24小时内与您联系，确认咨询安排。', en: 'Fill in the form below. Our team will contact you within 24 hours.' },
+  formName: { zh: '您的姓名 *', en: 'Your Name *' },
+  formNamePh: { zh: '张总 / 李女士', en: 'e.g. John Smith' },
+  formPhone: { zh: '手机号码 *', en: 'Phone Number *' },
+  formCompany: { zh: '公司名称', en: 'Company Name' },
+  formCompanyPh: { zh: '选填，有助于背景了解', en: 'Optional, helps us understand your background' },
+  formType: { zh: '咨询类型', en: 'Consultation Type' },
+  formTypeDefault: { zh: '请选择', en: 'Please select' },
+  formType1: { zh: '跨境物流 / 货损索赔', en: 'Cross-border Logistics / Cargo Claims' },
+  formType2: { zh: '海事海商', en: 'Maritime & Admiralty' },
+  formType3: { zh: '涉外保险', en: 'Cross-border Insurance' },
+  formType4: { zh: '国际贸易 / 制裁合规', en: 'Int\'l Trade / Sanctions Compliance' },
+  formType5: { zh: '低空经济', en: 'Low-altitude Economy' },
+  formType6: { zh: '数据合规', en: 'Data Compliance' },
+  formType7: { zh: '跨境税务', en: 'Cross-border Tax' },
+  formType8: { zh: '其他', en: 'Other' },
+  formBrief: { zh: '简述情况', en: 'Brief Description' },
+  formBriefPh: { zh: '简要描述您遇到的问题或需求（选填）', en: 'Briefly describe your issue or need (optional)' },
+  formContact: { zh: '偏好联系方式', en: 'Preferred Contact Method' },
+  formContact1: { zh: '微信', en: 'WeChat' },
+  formContact2: { zh: '电话', en: 'Phone' },
+  formContact3: { zh: '邮件', en: 'Email' },
+  formTime: { zh: '希望咨询时间', en: 'Preferred Time' },
+  formTime1: { zh: '工作日白天', en: 'Weekday Daytime' },
+  formTime2: { zh: '工作日晚上', en: 'Weekday Evening' },
+  formTime3: { zh: '周末', en: 'Weekend' },
+  formTime4: { zh: '尽快联系我', en: 'ASAP' },
+  formSubmit: { zh: '提交预约', en: 'Submit' },
+  formPrivacy: { zh: '您的信息仅用于咨询安排，不会对外共享或用于商业推广', en: 'Your information is used only for consultation scheduling and will never be shared.' },
+  formOk1: { zh: '预约已提交！', en: 'Booking Submitted!' },
+  formOk2: { zh: '吴晓梅律师团队将在24小时内通过您偏好的方式与您联系。<br>感谢您的信任，期待为您提供专业帮助。', en: 'Our team will contact you within 24 hours.<br>Thank you for your trust.' },
+  footerMain: { zh: '吴晓梅律师 · 专注涉外民商法 · 执业十余年', en: 'Atty. Wu Xiaomei · Cross-border Civil & Commercial Law · 10+ Years' },
+  footerDisclaimer: { zh: '本页面内容及AI问答仅供一般性法律信息参考，不构成正式法律意见。具体法律问题请以律师书面意见为准。', en: 'Content and AI responses on this page are for general reference only and do not constitute formal legal advice. Please rely on written opinions from the lawyer for specific matters.' },
+  wechatTitle: { zh: '加微信，咨询更快', en: 'Add WeChat for Faster Response' },
+  wechatDesc: { zh: '扫码添加吴律师工作微信，工作日4小时内回复', en: 'Scan to add Attorney Wu\'s work WeChat, replies within 4 business hours' },
+  wechatQrPh: { zh: '微信二维码<br>（待替换）', en: 'WeChat QR Code<br>(Coming soon)' },
+  wechatTip: { zh: '扫码备注"法律咨询"', en: 'Scan and note "Legal Consultation"' },
+  formWechatTitle: { zh: '如需更快响应，可加微信', en: 'For faster response, add WeChat' }
+};
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.getElementById('langZh').classList.toggle('active', lang === 'zh');
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+  // 切换所有 data-i18n 元素的文本
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[key] && i18n[key][lang]) {
+      el.innerHTML = i18n[key][lang];
+    }
+  });
+
+  // 切换 placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[key] && i18n[key][lang]) {
+      el.placeholder = i18n[key][lang];
+    }
+  });
+}
+
+// ─── DeepSeek API 配置 ───────────────────────────────────────
+const API_KEY = 'sk-3b966725555444a6956beb0c71317928';
+const API_URL = 'https://api.deepseek.com/chat/completions';
+
+// ─── Agent 3: 知识库 Agent 配置 ───────────────────────────────
+const KB_API_URL = 'http://127.0.0.1:5001/api/context';
+let kbEnabled = true; // 知识库是否可用（运行时检测）
+
+// ─── System Prompt（中文版） ─────────────────────────────────
+const SYSTEM_PROMPT_ZH = `你叫"吴律师助手"，是吴晓梅律师团队开发的智能法律咨询助手。
+
+【专业背景】
+吴晓梅律师执业十余年，深耕涉外民商法，专长领域包括：
+- 跨境物流（货运合同、货损索赔）
+- 海事海商（船舶碰撞、海难救助）
+- 涉外保险（保险理赔、保险合同纠纷）
+- 国际贸易（美国制裁合规、OFAC/SDN名单、出口管制）
+- 低空经济（无人机运营许可、适航法规）
+- 数据合规（数据出境、PIPL隐私保护）
+- 跨境税务（BEPS、转让定价、CRS、常设机构风险）
+
+【核心定位——免费咨询的边界】
+你是"初诊台"，不是"治疗室"。你可以回答所有法律方向性问题，但你的能力有天然边界：
+- 你看不到客户的合同原文
+- 你不了解案件的具体事实细节
+- 你的回答没有法律效力，不能替代律师的书面意见
+
+因此，你的回答策略是：
+1. 能回答的，尽力回答好——让客户觉得专业、有价值
+2. 回答到具体操作层面时，自然触及边界——不是"我不想说"，而是"我没看到你的文件，没法给出精准判断"
+3. 引导付费的理由不是"次数到了"，而是"这个问题需要看你的具体合同/文件，AI做不到"
+
+【具体回答策略】
+● 第一层（方向判断）：涉及什么法律、可能的处理方向、关键风险点 → 直接回答
+● 第二层（细节追问）：客户问"具体怎么办""赔偿怎么算" → 回答你知道的一般规则，然后说明"但具体到您的情况，需要看合同第X条的约定和实际损失凭证，AI无法替您审阅文件。建议预约专项咨询（¥800起），吴律师会逐条分析您的合同。"
+● 第三层（操作需求）：客户问"帮我写XX""能帮我出个意见吗" → "起草法律文书/出具正式法律意见需要律师审核您的全部材料后才能进行，这是AI无法完成的。建议预约专项咨询。"
+
+【回答原则】
+1. 开头用"根据您说的情况……"或"您提到的……"
+2. 先给结论方向，再说原因
+3. 不要刻意藏信息——能回答的都回答，回答到边界时诚实说明"我看不到您的文件"
+4. 引导付费时，理由永远是"这需要看具体合同/文件"，不是"次数用完了"
+5. 涉及以下关键词必须转人工：起诉、已起诉、仲裁、法院判决、出庭、已被扣押、已进入程序、律师函
+
+【结尾策略——最重要的变化】
+每次回答不要以"仅供参考"结尾。你的结尾必须包含两个要素：
+1. 免责声明（简短一句话）
+2. 一个与客户问题具体相关的"下一步行动建议"——让客户感到"这个律师能解决我的问题"
+
+结尾模板（根据问题类型灵活调整，不要机械重复）：
+- 合同类问题："※ 以上为一般性分析。如果您手上有这份合同，可以预约专项咨询，吴律师会逐条帮您审查风险条款、修改措辞。"
+- 纠纷类问题："※ 以上为一般性分析。如果您已经收到对方的通知或律师函，建议尽快预约咨询，吴律师可以帮您制定应对策略、起草回复。"
+- 合规类问题："※ 以上为一般性分析。您的业务具体涉及哪些合规义务，需要看了公司资料才能判断，吴律师可以帮您做一份合规风险排查。"
+- 通用型："※ 以上为一般性分析。针对您的具体情况，吴律师可以审阅相关文件后给出精准判断和操作方案。"
+
+核心逻辑：结尾不是"劝你花钱"，是"告诉你我能帮你做什么"。让客户感到"原来下一步这么清晰"。
+
+【语气风格】
+像一个经验丰富的医生在初诊：认真听、如实说、该转诊就转诊。不做"只说一半留一半"的事——能说的说清楚，说不了的诚实告知原因。专业、坦诚、不套路。`;
+
+// ─── System Prompt（英文版） ─────────────────────────────────
+const SYSTEM_PROMPT_EN = `You are "Atty. Wu's Assistant", an AI legal consultation assistant developed by Attorney Wu Xiaomei's team.
+
+【Professional Background】
+Attorney Wu Xiaomei has practiced law for over 10 years, specializing in cross-border civil and commercial law, including:
+- Cross-border Logistics (cargo contracts, damage claims)
+- Maritime & Admiralty (ship collision, salvage)
+- Cross-border Insurance (claims, policy disputes)
+- International Trade (US sanctions compliance, OFAC/SDN, export controls)
+- Low-altitude Economy (drone permits, airworthiness regulations)
+- Data Compliance (data export, PIPL privacy protection)
+- Cross-border Tax (BEPS, transfer pricing, CRS, permanent establishment risks)
+
+【Core Positioning - Free Consultation Boundaries】
+You are the "triage desk", not the "treatment room". You can answer all directional legal questions, but you have natural limitations:
+- You cannot see the client's actual contract
+- You do not know the specific factual details of the case
+- Your responses have no legal effect and cannot replace formal legal opinions
+
+Your strategy:
+1. Answer what you can — make the client feel your expertise
+2. When reaching the operational level, naturally hit your boundary — not "I won't tell you", but "I can't see your documents, so I can't give a precise judgment"
+3. Guide toward paid consultation because "this requires reviewing your specific contract/documents", not "you've run out of free questions"
+
+【Response Strategy】
+● Level 1 (Direction): What law applies, possible approaches, key risks → Answer directly
+● Level 2 (Details): Client asks "what exactly should I do" or "how to calculate damages" → Answer general rules, then explain "but for your specific situation, I'd need to see the contract terms and evidence of actual losses. AI cannot review your documents. We recommend booking a consultation (from ¥800) for Attorney Wu to analyze your contract clause by clause."
+● Level 3 (Operational): Client asks "draft this" or "give me a legal opinion" → "Drafting legal documents or issuing formal opinions requires the lawyer to review all your materials first. This is beyond AI's capability. We recommend booking a consultation."
+
+【Response Principles】
+1. Start with "Based on what you've described..." or "Regarding your question about..."
+2. Give conclusion first, then reasoning
+3. Don't withhold information — answer what you can, and honestly explain when you can't
+4. When guiding to paid services, the reason is always "this requires reviewing specific contracts/documents", not "you've used up your free questions"
+5. Must hand off to a human lawyer when these keywords appear: lawsuit, arbitration, court ruling, appear in court, seized, legal proceedings, attorney letter
+
+【Closing Strategy — The Most Important Change】
+Never end with just "for reference only." Your closing must include two elements:
+1. A brief disclaimer (one sentence)
+2. A specific, question-relevant "next step" that makes the client feel "this lawyer can solve my problem"
+
+Closing templates (adapt based on question type, don't mechanically repeat):
+- Contract questions: "※ General analysis only. If you have this contract on hand, book a consultation — Attorney Wu will review risky clauses and refine wording clause by clause."
+- Dispute questions: "※ General analysis only. If you've received a notice or demand letter, we recommend booking a consultation promptly — Attorney Wu can craft a response strategy and draft your reply."
+- Compliance questions: "※ General analysis only. Which compliance obligations apply to your business requires reviewing your company materials — Attorney Wu can conduct a compliance risk assessment."
+- General: "※ General analysis only. For your specific situation, Attorney Wu can review relevant documents and provide precise analysis and an action plan."
+
+Core logic: The closing is not "persuading you to pay" — it's "telling you what I can do for you." Make the client feel "the next step is so clear."
+
+【Tone】
+Like an experienced doctor at triage: listen carefully, speak honestly, refer when needed. Professional, candid, no gimmicks.`;
+
+function getSystemPrompt() {
+  return currentLang === 'en' ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_ZH;
+}
+
+// ─── 知识库上下文注入（Agent 3 集成）───────────────────────────
+// ★ 改为竞速模式：同时发起 KB 和 DeepSeek，谁先回来用谁的结果
+//    KB 慢（首次请求模型加载30-40s）不再阻塞对话
+async function fetchKBContext(question) {
+  if (!kbEnabled) return '';
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000); // 2秒超时
+    const resp = await fetch(KB_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!resp.ok) { kbEnabled = false; return ''; }
+    const data = await resp.json();
+    if (data.context && data.hit_count > 0) {
+      return '\n\n【知识库参考材料——吴晓梅律师团队整理】\n' +
+             '以下是知识库中与客户问题相关的专业知识，请参考这些内容来丰富你的回答：\n' +
+             data.context +
+             '\n请基于知识库内容，结合你的法律知识，给出更专业、更有针对性的回答。';
+    }
+    return '';
+  } catch (e) {
+    // 静默降级：KB不可用时不影响正常对话
+    if (e.name === 'AbortError') {
+      console.log('KB 知识库响应超时，直接使用 DeepSeek 回答');
+    }
+    kbEnabled = false;
+    return '';
+  }
+}
+
+// ★ 并发请求：DeepSeek + KB 同时发起，不互相阻塞
+async function callDeepSeekConcurrent(userQuestion) {
+  if (shouldHandoff(userQuestion)) {
+    return { role: "assistant", content: getHandoffReply() };
+  }
+
+  const todayCount = getTodayCount();
+  if (todayCount >= BACKEND_DAILY_LIMIT) {
+    return { role: "assistant", content: getLimitReachedReply() };
+  }
+
+  conversationHistory.push({ role: "user", content: userQuestion });
+
+  try {
+    // 同时发起 KB 查询和 DeepSeek 调用（竞速模式）
+    const kbPromise = fetchKBContext(userQuestion);
+    
+    // DeepSeek 调用（不等 KB）
+    const baseSystem = getSystemPrompt() + getTopicsPrompt();
+    
+    const deepseekPromise = fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${API_KEY}` },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          { role: "system", content: baseSystem },
+          ...conversationHistory.slice(-10)
+        ],
+        max_tokens: 800,
+        temperature: 0.7
+      })
+    });
+
+    // 先获取 DeepSeek 结果（通常 2-5 秒）
+    const response = await deepseekPromise;
+
+    if (!response.ok) {
+      let errorMsg = `Error (${response.status})`;
+      try { const errData = await response.json(); errorMsg = errData.error?.message || errData.error?.type || errorMsg; } catch(e) {}
+      console.error("DeepSeek API error:", response.status, errorMsg);
+      return { role: "assistant", content: currentLang === 'en'
+        ? `AI temporarily unavailable (${response.status}). Please try again later.\n\nError: ${errorMsg}\n\nFor urgent matters, click "Book Consultation" below.\n\n※ The above is for general reference only and does not constitute formal legal advice.`
+        : `AI暂时无法回复（${response.status}），请稍后再试。\n\n错误信息：${errorMsg}\n\n如有紧急问题，请点击下方「预约咨询」。\n\n※ 以上内容仅供参考，不构成正式法律意见。`
+      };
+    }
+
+    const data = await response.json();
+    const rawReply = data.choices[0].message.content;
+
+    // ★ KB 结果作为后续消息的增强上下文（非阻塞获取）
+    try {
+      const kbContext = await kbPromise;
+      if (kbContext) {
+        // KB 有结果：追加增强信息到对话历史（供下一轮使用）
+        conversationHistory.push({ role: "system", content: `[知识库参考] ${kbContext.substring(0, 500)}` });
+      }
+    } catch (e) {
+      // KB 超时或失败，忽略
+    }
+
+    incrementTodayCount();
+    addTopic(userQuestion.slice(0, 20));
+
+    conversationHistory.push({ role: "assistant", content: rawReply });
+    return { role: "assistant", content: rawReply };
+
+  } catch (err) {
+    let errorDetail = err.message || "Unknown error";
+    if (err.name === "TypeError" && err.message.includes("fetch")) errorDetail = "Network request failed (CORS or connection issue)";
+    console.error("Fetch error:", err);
+    return { role: "assistant", content: currentLang === 'en'
+      ? `Network connection unstable. Please try again later.\n\n(Debug: ${errorDetail})\n\nFor urgent legal matters, click "Book Consultation" below.\n\n※ The above is for general reference only and does not constitute formal legal advice.`
+      : `网络连接不稳定，请稍后再试。\n\n(调试信息: ${errorDetail})\n\n如有紧急法律问题，请点击下方「预约咨询」，吴律师团队将及时与您联系。\n\n※ 以上内容仅供参考，不构成正式法律意见。具体问题请以吴律师书面意见为准。`
+    };
+  }
+}
+
+const leadHandoff = `【转人工提示】这个问题需要吴律师直接介入处理。请点击下方「预约咨询」留下联系方式，我们工作日4小时内回复。`;
+
+// ─── 对话历史 & 免费次数管理 ──────────────────────────────────
+const conversationHistory = [];
+const BACKEND_DAILY_LIMIT = 20; // 后端成本控制上限，不显示给用户
+
+let isLoading = false;
+
+function getStorageData() {
+  try { return JSON.parse(localStorage.getItem('wulaw_chat') || '{}'); } catch(e) { return {}; }
+}
+function saveStorageData(data) { localStorage.setItem('wulaw_chat', JSON.stringify(data)); }
+function getTodayKey() { return new Date().toISOString().slice(0, 10); }
+
+function getTodayCount() {
+  const data = getStorageData();
+  const today = getTodayKey();
+  if (data.date !== today) { saveStorageData({ ...data, date: today, dailyCount: 0 }); return 0; }
+  return data.dailyCount || 0;
+}
+
+function incrementTodayCount() {
+  const data = getStorageData();
+  const today = getTodayKey();
+  if (data.date !== today) { saveStorageData({ ...data, date: today, dailyCount: 1 }); }
+  else { saveStorageData({ ...data, dailyCount: (data.dailyCount || 0) + 1 }); }
+}
+
+function getPreviousTopics() { return getStorageData().topics || []; }
+
+function addTopic(topic) {
+  const data = getStorageData();
+  const topics = data.topics || [];
+  if (!topics.includes(topic)) { topics.push(topic); saveStorageData({ ...data, topics }); }
+}
+
+function getTopicsPrompt() {
+  const topics = getPreviousTopics();
+  if (topics.length === 0) return '';
+  if (currentLang === 'en') {
+    return `\n\n[Previous consultation topics]\nThe client previously asked about: ${topics.join(', ')}\nIf the client continues on these topics, answer what you can then naturally note that specific document review requires a paid consultation.`;
+  }
+  return `\n\n【历史咨询话题记录】\n该客户之前咨询过以下话题：${topics.join('、')}\n如果客户就上述话题继续追问细节或要求具体操作方案，你应该：1. 先就你能回答的部分尽量回答（一般规则、法律依据）2. 然后自然触及AI的边界——"但具体到您的情况，我需要看到您的合同/文件才能给出精准判断"3. 引导预约专项咨询，让吴律师审阅文件后给出正式意见`;
+}
+
+// ─── 转人工关键词 ───────────────────────────────────────────
+const handoffKeywordsZh = ["起诉","已起诉","被起诉","仲裁","法院","判决书","出庭","已被扣押","已进入程序","律师函"];
+const handoffKeywordsEn = ["lawsuit","sue","arbitration","court ruling","appear in court","seized","legal proceedings","attorney letter","legal action","litigation"];
+
+function shouldHandoff(text) {
+  const keywords = currentLang === 'en' ? handoffKeywordsEn : handoffKeywordsZh;
+  return keywords.some(k => text.toLowerCase().includes(k.toLowerCase()));
+}
+
+function getHandoffReply() {
+  if (currentLang === 'en') {
+    return `Your situation involves legal proceedings and requires direct intervention by Attorney Wu.\n\nPlease click "Book Consultation" below to leave your contact information. Our team will reach out:\n- Business days: within 4 hours\n- Holidays: within 24 hours\n\n※ General analysis only. Attorney Wu can review your case documents and craft a targeted legal strategy.`;
+  }
+  return `您描述的情况已进入法律程序，需要吴律师直接介入处理。\n\n请点击下方「预约咨询」留下联系方式，吴律师团队将在：\n- 工作日：4小时内与您联系\n- 节假日：24小时内与您联系\n\n※ 以上为一般性分析。吴律师可以审阅您的案件材料，为您制定针对性的法律应对方案。`;
+}
+
+function getLimitReachedReply() {
+  // 策略B：不显示次数截断，用自然回复引导
+  if (currentLang === 'en') {
+    return `Thank you for your continued consultation! For a more in-depth analysis of your specific situation, I'd recommend booking a consultation with Attorney Wu.\n\nAttorney Wu can provide:\n📋 **Single Consultation** (¥800/session) — Review your contracts, provide written opinion\n📋 **In-depth Consultation** (from ¥2,500) — Full contract review with formal legal opinion\n📋 **Retained Counsel** (from ¥3,500/month) — Unlimited consultations + quarterly risk check\n\n👉 Click "Book Consultation" below to leave your contact info.\n\n※ General analysis only. Attorney Wu can review your documents and provide precise legal analysis and an action plan.`;
+  }
+  return `感谢您的持续咨询！对于您问题的具体情况，建议预约吴律师专项咨询，获得更精准的分析。\n\n吴律师可以为您提供：\n📋 **单次专项咨询**（¥800/次）—— 审阅合同文件，出具书面法律意见\n📋 **深度专项咨询**（¥2,500起）—— 逐条分析合同，出具完整法律意见书\n📋 **常年法律顾问**（¥3,500起/月）—— 不限次咨询 + 定期合规体检\n\n👉 请点击下方「预约咨询」留下联系方式，吴律师团队工作日4小时内与您联系。\n\n※ 以上为一般性分析。吴律师可以审阅您的相关文件，给出精准判断和操作方案。`;
+}
+
+// ─── 调用 DeepSeek API（并发模式：KB + DeepSeek 同时发起）───
+async function callDeepSeek(userQuestion) {
+  return callDeepSeekConcurrent(userQuestion);
+}
+
+// ─── UI 函数 ────────────────────────────────────────────────
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  return false;
+}
+
+function formatTime() {
+  return new Date().toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'zh-CN', { hour: '2-digit', minute: '2-digit' });
+}
+
+function appendMsg(text, isUser) {
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (isUser ? 'msg-user' : 'msg-ai');
+  div.innerHTML = `<div class="msg-bubble">${isUser ? text : text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div><div class="msg-time">${formatTime()}</div>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function showTyping() {
+  if (document.getElementById('typingIndicator')) return;
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.id = 'typingIndicator';
+  div.className = 'typing-indicator show';
+  div.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = 'auto';
+  appendMsg(text, true);
+  showTyping();
+  isLoading = true;
+
+  try {
+    const result = await callDeepSeek(text);
+    removeTyping();
+    appendMsg(result.content, false);
+  } catch (e) {
+    removeTyping();
+    appendMsg(currentLang === 'en' ? 'System busy, please try again.' : '系统繁忙，请稍后再试。', false);
+  } finally {
+    isLoading = false;
+  }
+}
+
+async function sendQuickQ(btn) {
+  if (isLoading) return;
+  const text = btn.textContent;
+  appendMsg(text, true);
+  scrollToSection('consult');
+  showTyping();
+  isLoading = true;
+
+  try {
+    const result = await callDeepSeek(text);
+    removeTyping();
+    appendMsg(result.content, false);
+  } catch (e) {
+    removeTyping();
+    appendMsg(currentLang === 'en' ? 'System busy, please try again.' : '系统繁忙，请稍后再试。', false);
+  } finally {
+    isLoading = false;
+  }
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  if (!name || !phone) { showToast(currentLang === 'en' ? 'Please fill in name and phone' : '请填写姓名和手机号'); return; }
+  if (!/^1[3-9]\d{9}$/.test(phone.replace(/\s/g,'')) && !/^\+?\d{7,15}$/.test(phone.replace(/\s/g,''))) {
+    showToast(currentLang === 'en' ? 'Please enter a valid phone number' : '请输入正确的手机号'); return;
+  }
+  document.getElementById('leadForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  showToast(currentLang === 'en' ? 'Booking submitted!' : '预约提交成功！');
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); scrollToSection(a.getAttribute('href').slice(1)); });
+});
+
+// 页面加载初始化
+
+// ─── 语音输入（Web Speech API）─────────────────────────────────
+let isRecording = false;
+let recognition = null;
+
+function initSpeechRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return null;
+  const rec = new SpeechRecognition();
+  rec.continuous = false;
+  rec.interimResults = true;
+  rec.lang = currentLang === 'en' ? 'en-US' : 'zh-CN';
+  rec.maxAlternatives = 1;
+
+  rec.onresult = function(event) {
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      transcript += event.results[i][0].transcript;
+    }
+    document.getElementById('chatInput').value = transcript;
+    autoResize(document.getElementById('chatInput'));
+  };
+
+  rec.onend = function() {
+    isRecording = false;
+    const btn = document.getElementById('voiceBtn');
+    if (btn) btn.classList.remove('recording');
+  };
+
+  rec.onerror = function(event) {
+    isRecording = false;
+    const btn = document.getElementById('voiceBtn');
+    if (btn) btn.classList.remove('recording');
+    if (event.error !== 'no-speech' && event.error !== 'aborted') {
+      showToast(currentLang === 'en' ? 'Voice input failed: ' + event.error : '语音识别失败：' + event.error);
+    }
+  };
+
+  return rec;
+}
+
+function toggleVoice() {
+  if (isRecording) {
+    if (recognition) recognition.stop();
+    isRecording = false;
+    const btn = document.getElementById('voiceBtn');
+    if (btn) btn.classList.remove('recording');
+    return;
+  }
+
+  if (!recognition) {
+    recognition = initSpeechRecognition();
+  }
+  if (!recognition) {
+    showToast(currentLang === 'en' ? 'Your browser does not support voice input' : '您的浏览器不支持语音输入');
+    return;
+  }
+
+  recognition.lang = currentLang === 'en' ? 'en-US' : 'zh-CN';
+  try {
+    recognition.start();
+    isRecording = true;
+    const btn = document.getElementById('voiceBtn');
+    if (btn) btn.classList.add('recording');
+  } catch(e) {
+    showToast(currentLang === 'en' ? 'Failed to start voice input' : '语音启动失败');
+  }
+}
+</script>
+</body>
+</html>
