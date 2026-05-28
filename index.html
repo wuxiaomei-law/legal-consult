@@ -1047,9 +1047,51 @@ function submitForm() {
   if (!/^1[3-9]\d{9}$/.test(phone.replace(/\s/g,'')) && !/^\+?\d{7,15}$/.test(phone.replace(/\s/g,''))) {
     showToast(currentLang === 'en' ? 'Please enter a valid phone number' : '请输入正确的手机号'); return;
   }
-  document.getElementById('leadForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
-  showToast(currentLang === 'en' ? 'Booking submitted!' : '预约提交成功！');
+
+  const btn = document.querySelector('.form-submit');
+  btn.disabled = true;
+  btn.textContent = currentLang === 'en' ? 'Submitting...' : '提交中...';
+
+  const payload = {
+    type: 'lead',
+    data: {
+      name: name,
+      phone: phone,
+      company: document.getElementById('fcompany').value.trim(),
+      type: document.getElementById('ftype').value,
+      desc: document.getElementById('fdesc').value.trim(),
+      contact: document.getElementById('fcontact').value,
+      time: document.getElementById('ftime').value,
+    }
+  };
+
+  // 拉取API地址（跟聊天窗口同一个SCF）
+  const API_URL = window.location.hostname.includes('github.io')
+    ? 'https://1436174324-l1tvdn0f6b.ap-guangzhou.tencentscf.com'
+    : '/.netlify/functions/deepseek-proxy';
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      document.getElementById('leadForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      showToast(currentLang === 'en' ? 'Booking submitted!' : '预约提交成功！');
+    } else {
+      showToast(currentLang === 'en' ? 'Submit failed, please try again' : '提交失败，请重试');
+      btn.disabled = false;
+      btn.textContent = currentLang === 'en' ? 'Submit' : '提交预约';
+    }
+  })
+  .catch(() => {
+    showToast(currentLang === 'en' ? 'Network error, please try again' : '网络错误，请重试');
+    btn.disabled = false;
+    btn.textContent = currentLang === 'en' ? 'Submit' : '提交预约';
+  });
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
