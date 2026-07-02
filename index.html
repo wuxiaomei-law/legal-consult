@@ -165,6 +165,14 @@
     .form-grid { grid-template-columns: 1fr; }
     .plans { grid-template-columns: 1fr; }
   }
+  /* Invoice checker entry */
+  .invoice-entry { background: #fff; border: 0.5px solid #e8e6df; border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; }
+  .invoice-entry-icon { font-size: 32px; flex-shrink: 0; }
+  .invoice-entry-text { flex: 1; }
+  .invoice-entry-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .invoice-entry-desc { font-size: 12px; color: #888780; }
+  .invoice-entry-btn { display: inline-block; background: #534AB7; color: #fff; padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+  .invoice-entry-btn:hover { background: #3C3489; }
 </style>
 </head>
 <body>
@@ -233,6 +241,18 @@
     <div class="field-card"><div class="field-icon">🚁</div><div class="field-name" data-i18n="f5name">低空经济</div><div class="field-sub" data-i18n="f5sub">无人机 / 航空法规</div></div>
     <div class="field-card"><div class="field-icon">🔒</div><div class="field-name" data-i18n="f6name">数据合规</div><div class="field-sub" data-i18n="f6sub">数据出境 / 隐私保护</div></div>
     <div class="field-card"><div class="field-icon">💰</div><div class="field-name" data-i18n="f7name">跨境税务</div><div class="field-sub" data-i18n="f7sub">BEPS合规 / 转让定价</div></div>
+  </div>
+</section>
+
+<!-- Invoice Checker Entry -->
+<section class="section">
+  <div class="invoice-entry">
+    <div class="invoice-entry-icon">🧾</div>
+    <div class="invoice-entry-text">
+      <div class="invoice-entry-title">跨境交易发票自查</div>
+      <div class="invoice-entry-desc">不确定出口要不要开票？30秒快速判断</div>
+    </div>
+    <a class="invoice-entry-btn" href="invoice-checker.html">开始自查 →</a>
   </div>
 </section>
 
