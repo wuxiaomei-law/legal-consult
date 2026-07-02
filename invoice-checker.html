@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跨境交易发票自查</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+  .header {
+    background: #2c2c2a;
+    color: white;
+    padding: 24px 20px 20px;
+    text-align: center;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .header p { font-size: 13px; opacity: 0.85; }
+
+  .container { max-width: 640px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 24px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .step-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .step-dot.done { background: #534AB7; color: white; }
+  .step-dot.active { background: #534AB7; color: white; box-shadow: 0 0 0 4px rgba(83,74,183,0.2); }
+  .step-dot.pending { background: #e8ecf2; color: #999; }
+  .step-line { flex: 1; height: 3px; background: #e8ecf2; margin: 0 6px; transition: background 0.3s; }
+  .step-line.done { background: #534AB7; }
+  .step-label { font-size: 11px; color: #666; text-align: center; margin-top: 4px; }
+
+  .question-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .question-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #1a1a2e; }
+  .question-hint { font-size: 13px; color: #888; margin-bottom: 18px; line-height: 1.5; }
+
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .options-grid.single { grid-template-columns: 1fr; }
+  .option-card {
+    border: 2px solid #e8ecf2;
+    border-radius: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .option-card:hover { border-color: #534AB7; background: #EEEDFE; transform: translateY(-1px); }
+  .option-card.selected { border-color: #534AB7; background: #EEEDFE; }
+  .option-icon { font-size: 28px; flex-shrink: 0; }
+  .option-text { flex: 1; }
+  .option-title { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 2px; }
+  .option-desc { font-size: 12px; color: #888; line-height: 1.4; }
+
+  .zone-question {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed #dde3ee;
+  }
+  .zone-question .question-title { font-size: 15px; margin-bottom: 4px; }
+  .zone-question .question-hint { font-size: 12px; margin-bottom: 12px; }
+  .zone-link { font-size: 12px; color: #534AB7; text-decoration: underline; cursor: pointer; }
+
+  .amount-input {
+    width: 100%;
+    border: 2px solid #e8ecf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    color: #1a1a2e;
+  }
+  .amount-input:focus { border-color: #534AB7; }
+  .amount-unit { color: #666; font-size: 13px; margin-top: 8px; }
+  .amount-hint { color: #aaa; font-size: 12px; margin-top: 6px; }
+  .amount-skip { color: #888; font-size: 13px; margin-top: 10px; text-align: center; }
+
+  .btn-next {
+    width: 100%;
+    padding: 16px;
+    background: #534AB7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.2s;
+  }
+  .btn-next:hover { background: #3C3489; }
+  .btn-next:disabled { background: #c0c9d8; box-shadow: none; cursor: not-allowed; transform: none; }
+  .btn-back {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #666;
+    border: 1px solid #dde3ee;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { background: #f5f7fa; }
+
+  .result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 14px;
+    animation: fadeIn 0.4s ease;
+  }
+  .result-verdict {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .result-verdict.need { background: #fff3e0; border-left: 4px solid #ff9800; }
+  .result-verdict.noneed { background: #e8f5e9; border-left: 4px solid #4caf50; }
+  .result-verdict.partial { background: #e3f2fd; border-left: 4px solid #2196f3; }
+  .verdict-icon { font-size: 32px; }
+  .verdict-text h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .verdict-text p { font-size: 13px; color: #666; line-height: 1.5; }
+
+  .result-section { margin-bottom: 18px; }
+  .result-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #534AB7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .result-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e8ecf2;
+  }
+
+  .invoice-box {
+    background: #EEEDFE;
+    border: 1px solid #AFA9EC;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .invoice-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .invoice-value { font-size: 15px; font-weight: 600; color: #534AB7; }
+  .invoice-note { font-size: 12px; color: #666; margin-top: 4px; line-height: 1.5; }
+
+  .consequence-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f2f5;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .consequence-item:last-child { border-bottom: none; }
+  .consequence-icon { flex-shrink: 0; margin-top: 1px; }
+
+  .tip-box {
+    background: #fffbf0;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #5a4500;
+  }
+  .tip-box strong { color: #e65100; }
+  .option-card.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; border-color: #e8ecf2 !important; background: #f5f5f5 !important; }
+  .option-card.disabled:hover { transform: none; box-shadow: none; border-color: #e8ecf2 !important; }
+  .person-notice { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 12px; }
+  .person-notice strong { color: #e65100; }
+
+  .confusion-box {
+    background: #f3f4f6;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .confusion-box .q { font-weight: 700; color: #333; margin-bottom: 6px; }
+  .confusion-box .a { color: #555; }
+
+  .btn-restart {
+    width: 100%;
+    padding: 14px;
+    background: white;
+    color: #534AB7;
+    border: 2px solid #534AB7;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover { background: #f0f5ff; }
+
+  .consult-banner {
+    background: #2c2c2a;
+    border-radius: 12px;
+    padding: 20px 18px;
+    color: white;
+    text-align: center;
+    margin-top: 14px;
+  }
+  .consult-banner p { font-size: 13px; opacity: 0.85; margin-bottom: 8px; line-height: 1.6; }
+  .consult-banner strong { font-size: 15px; display: block; margin-bottom: 14px; }
+  .consult-btns { display: flex; gap: 10px; justify-content: center; }
+  .consult-btn {
+    display: inline-block; padding: 10px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .consult-btn-fill { background: #534AB7; color: white; }
+  .consult-btn-fill:hover { background: #3C3489; }
+  .consult-btn-outline { background: transparent; color: white; border: 0.5px solid rgba(255,255,255,0.4); }
+  .consult-btn-outline:hover { border-color: rgba(255,255,255,0.8); }
+
+  .hidden { display: none; }
+
+  .selection-summary {
+    background: #eef3fc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #534AB7;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sel-chip {
+    background: white;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #534AB7;
+    border: 1px solid #AFA9EC;
+  }
+
+  .loading-mask {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.92);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+    z-index: 999;
+    transition: opacity 0.3s;
+  }
+  .loading-mask.hide { opacity: 0; pointer-events: none; }
+  .loading-spinner {
+    width: 36px; height: 36px;
+    border: 4px solid #e8ecf2;
+    border-top-color: #534AB7;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 14px; color: #888; }
+
+  .zone-list-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .zone-list-content {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .zone-list-content h3 { font-size: 16px; margin-bottom: 12px; }
+  .zone-list-content p { font-size: 13px; color: #666; line-height: 1.8; margin-bottom: 8px; }
+  .zone-list-close {
+    width: 100%; padding: 12px;
+    background: #534AB7; color: white;
+    border: none; border-radius: 10px;
+    font-size: 15px; cursor: pointer;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 400px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .option-card { padding: 12px; }
+  }
+</style>
+
+<script type="application/json" id="embeddedRules">
+{
+  "meta": {
+    "version": "2.1",
+    "updated": "2026-07-01",
+    "description": "跨境交易发票自查规则库 v2.1。增加综试区维度。更新此文件即可生效，无需改HTML。"
+  },
+  "zoneNeeded": [
+    "small_b2c_platform",
+    "individual_biz_b2c_platform",
+    "person_b2c_platform",
+    "small_bonded",
+    "individual_biz_bonded",
+    "person_bonded"
+  ],
+  "taxpayerNeeded": [
+    "individual_biz_general",
+    "individual_biz_b2b",
+    "individual_biz_9810"
+  ],
+  "results": {
+    "small_general": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "小规模纳税人一般贸易出口，适用出口免税政策，免税不退税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\"，备注栏注明\"出口货物+报关单号\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】出口免征增值税，但已缴进项税不可退回（免税不退税）"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：税务机关责令改正，可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "境外客户说的\"发票\"是商业发票（Commercial Invoice），用于清关。中国税务这边开增值税普通发票（免税）用于申报。两件事完全不同。",
+      "confusions": [
+        {
+          "q": "💬 \"境外客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国税务这边开具增值税普通发票（免税）。两件事不同。"
+        }
+      ],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条：增值税小规模纳税人出口货物，免征增值税。",
+        "《中华人民共和国发票管理办法》第33条：未按照规定开具发票的，由税务机关责令限期改正，可以并处1万元以下的罚款。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.购买方填境外客户名称（英文），纳税人识别号留空 4.货物信息与报关单一致 5.税率选\"免税\" 6.备注栏注明\"出口货物+报关单号\" 7.保存生成电子发票",
+      "remedy": null
+    },
+    "small_b2c_zone_yes": {
+      "verdict": "noneed",
+      "verdictIcon": "✅",
+      "verdictTitle": "不需要开票",
+      "verdictDesc": "综试区内小规模纳税人跨境电商B2C出口，可享\"无票免税\"政策",
+      "invoices": [],
+      "consequences": [],
+      "tip": "综试区内可享无票免税政策，无需取得增值税专用发票即可免征增值税。但需在跨境电商平台如实申报，保存交易记录备查。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "他们要的是英文商业发票（Commercial Invoice），平台会自动生成。中国这边您不用去税务局开任何发票。"
+        }
+      ],
+      "laws": [
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）：综试区电子商务出口企业出口未取得有效进货凭证的货物，符合条件的，免征增值税和消费税。"
+      ],
+      "operation": null,
+      "remedy": null
+    },
+    "small_b2c_zone_no": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "不在综试区的小规模纳税人跨境电商B2C出口，需有合规进项发票才能免税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\"，备注栏注明\"跨境电商B2C出口+报关单号\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税，且必须有合规进项发票才能享受免税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "不在综试区，无法享受无票免税优惠。必须有合规进项发票才能免税，否则可能被征税。",
+      "confusions": [
+        {
+          "q": "💬 \"境外客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国税务这边开具增值税普通发票（免税）。两件事不同。"
+        }
+      ],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条：小规模纳税人出口货物免征增值税。",
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）：无票免税仅适用于综试区内企业。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.税率选\"免税\" 4.备注栏注明\"跨境电商B2C出口+报关单号\" 5.保存生成电子发票",
+      "remedy": null
+    },
+    "small_b2b": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "小规模纳税人跨境电商B2B出口，适用出口免税政策",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\"，备注栏注明\"跨境电商B2B出口+报关单号\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "小规模纳税人无论哪种贸易方式，都不能退税，只能免税。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条：小规模纳税人出口货物免征增值税。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.税率选\"免税\" 4.备注栏注明\"跨境电商B2B出口+报关单号\"",
+      "remedy": null
+    },
+    "small_9810": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "小规模纳税人海外仓出口，无法通过9810模式退税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\"，备注栏注明\"海外仓出口+报关单号\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税，小规模纳税人无法通过9810模式退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "如需退税，需升级为一般纳税人。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条。"
+      ],
+      "operation": "开具步骤同小规模纳税人通用流程。",
+      "remedy": null
+    },
+    "small_1039": {
+      "verdict": "noneed",
+      "verdictIcon": "✅",
+      "verdictTitle": "不需要开票",
+      "verdictDesc": "市场采购贸易（1039）核心优势是\"无票免税\"，不征不退",
+      "invoices": [],
+      "consequences": [],
+      "tip": "市场采购贸易方式专为小商户设计，无需发票即可免税出口。",
+      "confusions": [],
+      "laws": [
+        "《关于市场采购贸易方式出口货物免税管理试行办法的公告》（国家税务总局公告2015年第89号）：市场采购贸易方式出口的货物，实行增值税免税管理。"
+      ],
+      "operation": null,
+      "remedy": null
+    },
+    "individual_biz_general_gtax": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "个体工商户（一般纳税人）一般贸易出口，适用\"免抵退\"税办法",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（出口）",
+          "note": "税率填\"免税\"或\"0%\"，备注注明\"出口货物+报关单号\""
+        },
+        {
+          "label": "② 采购时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "向供应商索取专票，360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "【退税影响】未开销售普票：无法申报退税。退税款损失因产品退税率而异"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票被查：可以处1万元以下罚款（《发票管理办法》第33条）"
+        },
+        {
+          "icon": "🔴",
+          "text": "【免抵退影响】采购未取得专票：免抵退税额减少"
+        }
+      ],
+      "tip": "一般纳税人个体工商户出口适用免抵退税办法，与生产企业相同。必须有合规进项发票才能退税。",
+      "confusions": [
+        {
+          "q": "💬 \"境外客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国税务这边开增值税普通发票（免税）用于申报。两件事不同。"
+        }
+      ],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条：适用免抵退税办法。",
+        "《增值税一般纳税人登记管理办法》（国家税务总局公告2018年第6号）。"
+      ],
+      "operation": "开具步骤同生产企业一般贸易流程。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "individual_biz_general_stax": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "个体工商户（小规模纳税人）一般贸易出口，适用出口免税政策，免税不退税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】出口免征增值税，但已缴进项税不可退回（免税不退税）"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "小规模纳税人个体工商户只能免税不能退税。如出口金额较大，建议评估升级为一般纳税人。",
+      "confusions": [
+        {
+          "q": "💬 \"境外客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国税务这边开增值税普通发票（免税）用于申报。两件事不同。"
+        }
+      ],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条：小规模纳税人出口货物免征增值税。",
+        "《中华人民共和国发票管理办法》第33条。"
+      ],
+      "operation": "开具步骤同小规模纳税人通用流程。",
+      "remedy": null
+    },
+    "individual_biz_b2c_zone_yes": {
+      "verdict": "noneed",
+      "verdictIcon": "✅",
+      "verdictTitle": "不需要开票",
+      "verdictDesc": "综试区内个体工商户跨境电商B2C出口，可享\"无票免税\"政策",
+      "invoices": [],
+      "consequences": [],
+      "tip": "综试区内可享无票免税政策，无需取得增值税专用发票即可免征增值税。但需在跨境电商平台如实申报，保存交易记录备查。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "他们要的是英文商业发票，平台会自动生成。中国这边不用开票。"
+        }
+      ],
+      "laws": [
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）：综试区内电子商务出口企业出口未取得有效进货凭证的货物，符合条件的，免征增值税和消费税。"
+      ],
+      "operation": null,
+      "remedy": null
+    },
+    "individual_biz_b2c_zone_no": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "不在综试区的个体工商户跨境电商B2C出口，需开票免税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】需开票免税，无\"无票免税\"优惠，需有合规进项发票才能免税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "不在综试区，无法享受无票免税优惠，需有合规进项发票才能免税。建议考虑迁入综试区或注册在综试区。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）。",
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）：无票免税仅适用于综试区内企业。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.税率选\"免税\" 4.备注栏注明出口信息",
+      "remedy": null
+    },
+    "individual_biz_b2b_gtax": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "个体工商户（一般纳税人）跨境电商B2B出口，适用\"免抵退\"税办法",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（出口）",
+          "note": "备注注明\"跨境电商B2B出口+报关单号\""
+        },
+        {
+          "label": "② 采购时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "【退税影响】未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "一般纳税人个体工商户B2B出口适用免抵退税办法，与生产企业相同。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。"
+      ],
+      "operation": "开具步骤同生产企业一般贸易流程。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "individual_biz_b2b_stax": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "个体工商户（小规模纳税人）跨境电商B2B出口，适用出口免税政策，免税不退税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "小规模纳税人个体工商户只能免税不能退税。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条。"
+      ],
+      "operation": "开具步骤同小规模纳税人通用流程。",
+      "remedy": null
+    },
+    "individual_biz_9810_gtax": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "个体工商户（一般纳税人）海外仓出口，适用\"免抵退\"税办法，可享\"离境即退税\"",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（出口）",
+          "note": "备注注明\"海外仓出口+报关单号\""
+        },
+        {
+          "label": "② 采购时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "【退税影响】未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "一般纳税人个体工商户海外仓出口可享\"离境即退税\"政策。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。",
+        "财政部、税务总局公告2023年第22号：跨境电商海外仓出口适用\"离境即退税\"。"
+      ],
+      "operation": "开具步骤同生产企业一般贸易流程，退税申报时注明海外仓模式。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "individual_biz_9810_stax": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "个体工商户（小规模纳税人）海外仓出口，免税不退税",
+      "invoices": [
+        {
+          "label": "出口环节开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率栏填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税，小规模纳税人无法通过9810模式退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "如需退税，需升级为一般纳税人。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第6条。"
+      ],
+      "operation": "开具步骤同小规模纳税人通用流程。",
+      "remedy": null
+    },
+    "individual_biz_1039": {
+      "verdict": "noneed",
+      "verdictIcon": "✅",
+      "verdictTitle": "不需要开票",
+      "verdictDesc": "市场采购贸易（1039）专为个体工商户等设计，无票免税，不征不退",
+      "invoices": [],
+      "consequences": [],
+      "tip": "市场采购贸易是个体工商户出口的最佳选择之一，无需发票即可免税出口。",
+      "confusions": [],
+      "laws": [
+        "《关于市场采购贸易方式出口货物免税管理试行办法的公告》（国家税务总局公告2015年第89号）。"
+      ],
+      "operation": null,
+      "remedy": null
+    },
+    "person_b2c_zone_yes": {
+      "verdict": "need",
+      "verdictIcon": "⚠️",
+      "verdictTitle": "需要先注册市场主体",
+      "verdictDesc": "个人不能直接以个人身份开展跨境出口，需在综试区注册为个体工商户或企业并备案",
+      "invoices": [
+        {
+          "label": "建议",
+          "value": "注册个体工商户或企业",
+          "note": "注册后可在综试区享受无票免税政策"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】未办理市场主体登记从事经营，可能被认定无证经营（《税收征管法》第37条）"
+        },
+        {
+          "icon": "💰",
+          "text": "【经济损失】无法享受出口免税，可能需补缴税款"
+        }
+      ],
+      "tip": "注册个体工商户成本低、手续简单。注册后在综试区备案，即可享受无票免税政策。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "他们要的是英文商业发票，平台会自动生成。您需要处理的是中国税务合规问题——先注册。"
+        }
+      ],
+      "laws": [
+        "《中华人民共和国税收征收管理法》第37条：未办理税务登记从事经营的，由税务机关核定应纳税额，责令缴纳。",
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）：无票免税适用于综试区内注册并备案的企业。"
+      ],
+      "operation": null,
+      "remedy": "1.尽快注册个体工商户或有限责任公司 2.注册后办理税务登记 3.在综试区完成跨境电商备案 4.备案后可享受无票免税政策"
+    },
+    "person_other": {
+      "verdict": "need",
+      "verdictIcon": "⚠️",
+      "verdictTitle": "不适用，必须先完成市场主体登记",
+      "verdictDesc": "个人无法以个人身份开展该贸易方式，必须先注册为个体工商户或企业",
+      "invoices": [
+        {
+          "label": "建议",
+          "value": "注册个体工商户或企业",
+          "note": "注册后根据主体类型和贸易方式确定开票要求"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】未办理市场主体登记从事经营，可能被认定无证经营"
+        },
+        {
+          "icon": "💰",
+          "text": "【经济损失】无法享受出口免税，可能需补缴税款"
+        }
+      ],
+      "tip": "注册后，根据您的业务类型选择贸易方式，再来查询开票要求。",
+      "confusions": [],
+      "laws": [
+        "《中华人民共和国税收征收管理法》第37条。",
+        "《电子商务法》第10条：电子商务经营者应当依法办理市场主体登记。"
+      ],
+      "operation": null,
+      "remedy": "1.尽快注册个体工商户或企业 2.注册后办理税务登记 3.根据业务需要选择贸易方式 4.使用本工具查询开票要求"
+    },
+    "person_1039": {
+      "verdict": "need",
+      "verdictIcon": "⚠️",
+      "verdictTitle": "需先注册个体工商户",
+      "verdictDesc": "个人不能直接出口，需在综试区注册为个体工商户，通过1039市场采购模式出口可享无票免税",
+      "invoices": [
+        {
+          "label": "第一步",
+          "value": "注册个体工商户",
+          "note": "在综试区注册，成本低、手续简单"
+        },
+        {
+          "label": "第二步",
+          "value": "完成1039备案",
+          "note": "在综试区完成市场采购贸易备案"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】未办理市场主体登记从事经营，可能被认定无证经营"
+        },
+        {
+          "icon": "💰",
+          "text": "【经济损失】未注册无法直接通过1039出口"
+        }
+      ],
+      "tip": "市场采购（1039）模式允许个体工商户无票免税出口，是唯一适合个人（注册后）的跨境出口模式。",
+      "confusions": [],
+      "laws": [
+        "《关于市场采购贸易方式出口货物免税管理试行办法的公告》（国家税务总局公告2015年第89号）。",
+        "《中华人民共和国税收征收管理法》第37条。"
+      ],
+      "operation": "1.在综试区注册个体工商户 2.办理税务登记 3.完成市场采购贸易备案 4.通过1039方式出口",
+      "remedy": "尽快注册个体工商户并完成1039备案"
+    },
+    "factory_general": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "生产企业一般贸易出口，适用\"免抵退\"税办法",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "税率填\"0%\"或\"免税\"，备注注明\"出口货物+报关单号\""
+        },
+        {
+          "label": "② 采购原材料时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "向供应商索取专票，开具之日起360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "【退税影响】未开销售普票：无法申报退税。退税款损失因产品退税率而异"
+        },
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】不开票被查：可以处1万元以下罚款（《发票管理办法》第33条）"
+        },
+        {
+          "icon": "🔴",
+          "text": "【免抵退影响】采购未取得专票：免抵退税额减少"
+        },
+        {
+          "icon": "🔴",
+          "text": "【退税驳回】发票信息与报关单不一致：退税被驳回"
+        }
+      ],
+      "tip": "出口开具增值税普通发票（免税）；采购必须取得增值税专用发票；两张发票货物名称、数量、金额必须与报关单一致；专票360日内必须认证。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "他们要的是英文商业发票（Commercial Invoice），自行制作即可，用于清关。中国税务这边另需开具增值税普通发票（免税），两件事完全不同。"
+        }
+      ],
+      "laws": [
+        "《出口货物劳务增值税和消费税管理办法》（国家税务总局公告2012年第24号）第3条。",
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条：生产企业出口自产货物，适用增值税\"免抵退\"税办法。",
+        "《中华人民共和国发票管理办法》第33条。"
+      ],
+      "operation": "销售发票开具：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.购买方填境外客户英文名称，纳税人识别号留空 4.货物信息与报关单一致 5.税率选\"免税\"或\"0%\" 6.备注栏注明\"出口货物+报关单号+出口日期\" 7.保存生成电子发票。采购发票认证：1.登录增值税发票综合服务平台 2.发票抵扣勾选→发票抵扣勾选 3.输入发票信息提交认证（360日内完成）",
+      "remedy": "1.在出口之日起360日内补开增值税普通发票 2.向主管税务机关提交发票补开申请 3.提供业务真实性证明：报关单、提单、合同、境外汇款水单 4.补开备注栏注明\"出口补开发票+原出口日期+报关单号\" 5.补开务必确保交易真实，虚开可能涉及《刑法》第205条"
+    },
+    "factory_b2c": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "生产企业跨境电商B2C出口，有合规进项发票可申请免抵退",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "税率填\"免税\"，备注注明\"跨境电商B2C出口+报关单号\""
+        },
+        {
+          "label": "② 采购原材料时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票被查：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "有合规进项发票可申请退税。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国这边开增值税普通发票（免税）用于申报。"
+        }
+      ],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。",
+        "《关于跨境电子商务综合试验区零售出口货物税收政策的通知》（财税〔2018〕103号）。"
+      ],
+      "operation": "同生产企业一般贸易流程。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "factory_b2b": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "生产企业跨境电商B2B出口，政策同一般贸易，适用免抵退",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"跨境电商B2B出口+报关单号\""
+        },
+        {
+          "label": "② 采购原材料时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票被查：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "政策同一般贸易。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。"
+      ],
+      "operation": "同生产企业一般贸易流程。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "factory_9810": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，可以申请退税",
+      "verdictDesc": "生产企业海外仓出口，适用\"免抵退\"税办法，可享\"离境即退税\"政策",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"海外仓出口+报关单号\""
+        },
+        {
+          "label": "② 采购原材料时取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票被查：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "海外仓模式可享\"离境即退税\"政策，货物离境即可申请退税，无需等待最终销售。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。",
+        "财政部、税务总局公告2023年第22号：跨境电商海外仓出口适用\"离境即退税\"。"
+      ],
+      "operation": "同生产企业一般贸易流程，退税申报时注明海外仓模式。",
+      "remedy": "同生产企业一般贸易补救方案。"
+    },
+    "factory_1039": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "生产企业参与市场采购贸易（1039），一般不作为主要模式，免税不退税",
+      "invoices": [
+        {
+          "label": "向客户开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "1039一般不作为生产企业的主流模式。如需退税，改用一般贸易方式。",
+      "confusions": [],
+      "laws": [
+        "《关于市场采购贸易方式出口货物免税管理试行办法的公告》（国家税务总局公告2015年第89号）。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.税率选\"免税\" 4.备注注明\"市场采购出口+报关单号\"",
+      "remedy": null
+    },
+    "trading_general": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要两张发票，可以申请退税",
+      "verdictDesc": "外贸企业一般贸易出口：采购拿专票（退税凭证），出口开普票（报税依据），适用\"免退税\"",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"出口货物+报关单号\"。退税申报的必备单证。"
+        },
+        {
+          "label": "② 从国内供应商取得（进项）",
+          "value": "增值税专用发票",
+          "note": "必须索取专票（普票不行！），360日内认证。退税的核心凭证，没有专票不能退税。"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "❌",
+          "text": "未取得采购专票：不能退税，已缴进项税全部损失"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        },
+        {
+          "icon": "🔴",
+          "text": "发票信息与报关单不一致：退税被驳回"
+        },
+        {
+          "icon": "🔴",
+          "text": "专票超360日未认证：丧失退税权"
+        }
+      ],
+      "tip": "外贸企业最容易出错：①采购一定要专票不要普票；②进销项发票货物名称必须与报关单一致；③专票360日内必须认证；④进销项发票+报关单\"三单匹配\"。",
+      "confusions": [
+        {
+          "q": "💬 \"美国客户说要开发票\"怎么办？",
+          "a": "商业发票自行制作用于清关；中国这边开增值税普通发票（免税）用于申报。两件事不同。"
+        }
+      ],
+      "laws": [
+        "《出口货物劳务增值税和消费税管理办法》（国家税务总局公告2012年第24号）。",
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条：外贸企业出口货物，免征增值税，相应的进项税额退还。",
+        "《中华人民共和国发票管理办法》第33条。"
+      ],
+      "operation": "销售发票：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.购买方填境外客户英文名称 4.货物信息与报关单一致 5.税率选\"免税\" 6.备注栏注明\"出口货物+报关单号+出口日期\"。采购发票认证：1.登录增值税发票综合服务平台 2.发票抵扣勾选 3.输入发票信息提交认证（360日内）。三单匹配自查：采购专票货物名称=出口普票货物名称=报关单商品名称；采购专票数量≤出口数量；采购金额与出口金额逻辑匹配。",
+      "remedy": "1.在出口之日起360日内补开增值税普通发票 2.向税务机关提交补开申请+情况说明 3.提供业务真实性证明：报关单、提单、合同、境外汇款水单 4.补开备注栏注明\"出口补开发票+原出口日期+报关单号\" 5.补开务必确保交易真实，虚开可能触犯《刑法》第205条 6.如超过退税申报截止日（次年4月30日）：丧失退税权，但可适用免税"
+    },
+    "trading_b2c": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要两张发票，可以申请退税",
+      "verdictDesc": "外贸企业跨境电商B2C出口，有合规进项发票可申请免退税",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"跨境电商B2C出口+报关单号\""
+        },
+        {
+          "label": "② 从国内供应商取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "❌",
+          "text": "未取得采购专票：不能退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "有合规进项发票可申请退税。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。"
+      ],
+      "operation": "同外贸企业一般贸易流程。",
+      "remedy": "同外贸企业一般贸易补救方案。"
+    },
+    "trading_b2b": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要两张发票，可以申请退税",
+      "verdictDesc": "外贸企业跨境电商B2B出口，政策同一般贸易，适用免退税",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"跨境电商B2B出口+报关单号\""
+        },
+        {
+          "label": "② 从国内供应商取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "政策同一般贸易。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。"
+      ],
+      "operation": "同外贸企业一般贸易流程。",
+      "remedy": "同外贸企业一般贸易补救方案。"
+    },
+    "trading_9810": {
+      "verdict": "need",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要两张发票，可以申请退税",
+      "verdictDesc": "外贸企业海外仓出口，适用\"免退税\"，可享\"离境即退税\"政策",
+      "invoices": [
+        {
+          "label": "① 向境外客户开具（销项）",
+          "value": "增值税普通发票（免税）",
+          "note": "备注注明\"海外仓出口+报关单号\""
+        },
+        {
+          "label": "② 从国内供应商取得（进项）",
+          "value": "增值税专用发票",
+          "note": "360日内认证"
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "❌",
+          "text": "未开销售普票：无法申报退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "海外仓模式可享\"离境即退税\"政策，货物离境即可申请退税。",
+      "confusions": [],
+      "laws": [
+        "《关于出口货物劳务增值税和消费税政策的通知》（财税〔2012〕39号）第5条。",
+        "财政部、税务总局公告2023年第22号。"
+      ],
+      "operation": "同外贸企业一般贸易流程，退税申报时注明海外仓模式。",
+      "remedy": "同外贸企业一般贸易补救方案。"
+    },
+    "trading_1039": {
+      "verdict": "partial",
+      "verdictIcon": "📋",
+      "verdictTitle": "需要开票，但不能退税",
+      "verdictDesc": "外贸企业参与市场采购贸易（1039），参与较少，免税不退税",
+      "invoices": [
+        {
+          "label": "向客户开具",
+          "value": "增值税普通发票（免税）",
+          "note": "税率填\"免税\""
+        }
+      ],
+      "consequences": [
+        {
+          "icon": "📌",
+          "text": "【政策效果】免税不退税"
+        },
+        {
+          "icon": "⚠️",
+          "text": "不开票：可以处1万元以下罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "1039非外贸企业主流选择。如需退税，改用一般贸易方式。",
+      "confusions": [],
+      "laws": [
+        "《关于市场采购贸易方式出口货物免税管理试行办法的公告》（国家税务总局公告2015年第89号）。"
+      ],
+      "operation": "开具步骤：1.登录增值税发票管理系统 2.选择\"增值税普通发票\" 3.税率选\"免税\" 4.备注注明\"市场采购出口+报关单号\"",
+      "remedy": null
+    },
+    "unsure": {
+      "verdict": "partial",
+      "verdictIcon": "❓",
+      "verdictTitle": "无法确定，建议咨询专业人士",
+      "verdictDesc": "未获取到足够信息判断发票要求，建议咨询税务专业人士",
+      "invoices": [],
+      "consequences": [
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】未按规定开具发票可能被罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "建议查看营业执照确认纳税人类型，或咨询主管税务机关。",
+      "confusions": [],
+      "laws": [
+        "《中华人民共和国发票管理办法》第33条。"
+      ],
+      "operation": null,
+      "remedy": "建议咨询专业律师或主管税务机关确认具体情况"
+    },
+    "default": {
+      "verdict": "partial",
+      "verdictIcon": "❓",
+      "verdictTitle": "无法确定，建议咨询专业人士",
+      "verdictDesc": "未获取到足够信息判断发票要求，建议咨询税务专业人士",
+      "invoices": [],
+      "consequences": [
+        {
+          "icon": "⚠️",
+          "text": "【行政责任】未按规定开具发票可能被罚款（《发票管理办法》第33条）"
+        }
+      ],
+      "tip": "建议查看营业执照确认纳税人类型，或咨询主管税务机关。",
+      "confusions": [],
+      "laws": [
+        "《中华人民共和国发票管理办法》第33条。"
+      ],
+      "operation": null,
+      "remedy": "建议咨询专业律师或主管税务机关确认具体情况"
+    }
+  }
+}
+</script>
+
+</head>
+<body>
+
+<div class="loading-mask" id="loadingMask">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">加载规则库…</div>
+</div>
+
+<div class="header">
+  <h1>🧾 跨境交易发票自查</h1>
+  <p>3步快速判断 · 不懂术语也能用</p>
+  <p style="font-size:11px;margin-top:8px;color:#b4b2a9;">贸易链法律AI · 吴晓梅律师团队</p>
+</div>
+
+<div class="container">
+
+  <div id="progressArea" class="progress-bar">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-label">我是谁</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot pending" id="dot2">2</div>
+      <div class="step-label">怎么卖</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot pending" id="dot3">3</div>
+      <div class="step-label">金额</div>
+    </div>
+    <div class="step-line" id="line3"></div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot pending" id="dot4">✓</div>
+      <div class="step-label">结果</div>
+    </div>
+  </div>
+
+  <div id="step1" class="question-card hidden">
+    <div class="question-title">你是哪种情况？</div>
+    <div class="question-hint">选最接近你的那一个，不确定就选"不太清楚"</div>
+    <div class="options-grid">
+      <div class="option-card" onclick="selectOption('type','factory',this)">
+        <div class="option-icon">🏭</div>
+        <div class="option-text">
+          <div class="option-title">工厂 / 生产企业</div>
+          <div class="option-desc">自己生产货物，直接出口（一般纳税人）</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('type','trading',this)">
+        <div class="option-icon">🏢</div>
+        <div class="option-text">
+          <div class="option-title">贸易公司</div>
+          <div class="option-desc">买别人的货，转手卖给境外客户（一般纳税人）</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('type','small',this)">
+        <div class="option-icon">🏪</div>
+        <div class="option-text">
+          <div class="option-title">小规模企业 / 贸易公司</div>
+          <div class="option-desc">年销售额不超过500万小规模纳税人</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('type','individual_biz',this)">
+        <div class="option-icon">👤</div>
+        <div class="option-text">
+          <div class="option-title">个体工商户</div>
+          <div class="option-desc">营业执照上是"个体工商户"</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('type','person',this)">
+        <div class="option-icon">🙋</div>
+        <div class="option-text">
+          <div class="option-title">个人（无营业执照）</div>
+          <div class="option-desc">以个人身份在平台卖货</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('type','unsure',this)">
+        <div class="option-icon">❓</div>
+        <div class="option-text">
+          <div class="option-title">不太确定</div>
+          <div class="option-desc">不知道自己属于哪种</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-next" id="btn1" disabled onclick="goStep(2)">下一步 →</button>
+  </div>
+
+  <div id="step2" class="question-card hidden">
+    <div class="question-title">你怎么把货卖出去的？</div>
+    <div class="question-hint">选最接近的方式，不用知道海关代码</div>
+    <div class="options-grid">
+      <div class="option-card" onclick="selectOption('trade','general',this)">
+        <div class="option-icon">🚢</div>
+        <div class="option-text">
+          <div class="option-title">正式报关出口</div>
+          <div class="option-desc">走海关，有报关单</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('trade','b2c_platform',this)">
+        <div class="option-icon">📦</div>
+        <div class="option-text">
+          <div class="option-title">亚马逊 / 速卖通等平台</div>
+          <div class="option-desc">一单一单卖给境外消费者</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('trade','b2b_ecom',this)">
+        <div class="option-icon">🤝</div>
+        <div class="option-text">
+          <div class="option-title">跨境电商 B2B</div>
+          <div class="option-desc">整批卖给境外企业</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('trade','overseas_warehouse',this)">
+        <div class="option-icon">🏬</div>
+        <div class="option-text">
+          <div class="option-title">海外仓发货</div>
+          <div class="option-desc">先运到境外仓库再发</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('trade','bonded',this)">
+        <div class="option-icon">🏛️</div>
+        <div class="option-text">
+          <div class="option-title">保税仓发货</div>
+          <div class="option-desc">从国内保税区直接发货</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="selectOption('trade','market_1039',this)">
+        <div class="option-icon">🏮</div>
+        <div class="option-text">
+          <div class="option-title">市场采购（义乌等）</div>
+          <div class="option-desc">在专业市场采购后出口</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="zoneQuestion" class="zone-question hidden">
+      <div class="question-title">你在跨境电商综试区吗？</div>
+      <div class="question-hint">
+        综试区覆盖全国178个城市，包括广州、深圳、东莞、杭州等。<span class="zone-link" onclick="showZoneList()">点这里看完整名单</span>
+      </div>
+      <div class="options-grid">
+        <div class="option-card" onclick="selectOption('zone','yes',this)">
+          <div class="option-icon">📍</div>
+          <div class="option-text"><div class="option-title">是，在综试区</div></div>
+        </div>
+        <div class="option-card" onclick="selectOption('zone','no',this)">
+          <div class="option-icon">📍</div>
+          <div class="option-text"><div class="option-title">否 / 不确定</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="taxpayerQuestion" class="zone-question hidden">
+      <div class="question-title">你是一般纳税人还是小规模纳税人？</div>
+      <div class="question-hint">
+        一般纳税人：年销售额超过500万，或主动申请登记。小规模纳税人：年销售额不超过500万。
+      </div>
+      <div class="options-grid">
+        <div class="option-card" onclick="selectOption('taxpayer','gtax',this)">
+          <div class="option-icon">📋</div>
+          <div class="option-text"><div class="option-title">一般纳税人</div><div class="option-desc">可申请退税</div></div>
+        </div>
+        <div class="option-card" onclick="selectOption('taxpayer','stax',this)">
+          <div class="option-icon">📌</div>
+          <div class="option-text"><div class="option-title">小规模纳税人</div><div class="option-desc">免税不退税</div></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-next" id="btn2" disabled onclick="goStep(3)">下一步 →</button>
+    <button class="btn-back" onclick="goStep(1)">← 上一步</button>
+  </div>
+
+  <div id="step3" class="question-card hidden">
+    <div class="question-title">这笔交易大概多少钱？</div>
+    <div class="question-hint">填人民币金额，不确定可以跳过</div>
+    <div id="selectionSummary" class="selection-summary"></div>
+    <input type="number" class="amount-input" id="amountInput" placeholder="例如：50000（可跳过）" oninput="checkAmount()" min="0">
+    <div class="amount-unit">单位：人民币（元）</div>
+    <div class="amount-hint" id="amountHint"></div>
+    <button class="btn-next" id="btn3" onclick="showResult()">查询结果 →</button>
+    <button class="btn-back" onclick="goStep(2)">← 上一步</button>
+  </div>
+
+  <div id="resultArea" class="hidden"></div>
+
+</div>
+
+<script>
+const state = { type: null, trade: null, amount: null, zone: null, taxpayer: null };
+let RULES = null;
+let ZONE_NEEDED = [];
+let TAXPAYER_NEEDED = [];
+
+async function loadRules() {
+  let loaded = false;
+  try {
+    const urls = [
+      'rules.json',
+      './rules.json',
+      window.location.href.replace(/\/[^/]*$/, '/rules.json')
+    ];
+    let resp = null;
+    for (const u of urls) {
+      try { resp = await fetch(u); if (resp.ok) break; } catch(e) {}
+    }
+    if (!resp || !resp.ok) throw new Error('fetch failed');
+    const data = await resp.json();
+    RULES = data.results;
+    ZONE_NEEDED = data.zoneNeeded || [];
+    TAXPAYER_NEEDED = data.taxpayerNeeded || [];
+    loaded = true;
+    console.log('[Rules] Loaded from external rules.json');
+  } catch (e) {
+    console.warn('[Rules] External rules.json load failed, trying embedded fallback...', e.message);
+    try {
+      const el = document.getElementById('embeddedRules');
+      if (el) {
+        const data = JSON.parse(el.textContent);
+        RULES = data.results;
+        ZONE_NEEDED = data.zoneNeeded || [];
+        TAXPAYER_NEEDED = data.taxpayerNeeded || [];
+        loaded = true;
+        console.log('[Rules] Loaded from embedded fallback');
+      }
+    } catch (e2) {
+      console.error('[Rules] Embedded fallback also failed', e2);
+    }
+  }
+  // Hide loading mask regardless
+  document.getElementById('loadingMask').classList.add('hide');
+  document.getElementById('step1').classList.remove('hidden');
+  if (!loaded) {
+    console.error('[Rules] ALL rule sources failed. Result page will show error.');
+  }
+}
+
+function needsZone(type, trade) {
+  const t = (trade === 'bonded') ? 'b2c_platform' : trade;
+  if (t === 'b2c_platform' && ['small','individual_biz','person'].includes(type)) return true;
+  return false;
+}
+
+function needsTaxpayer(type, trade) {
+  const t = (trade === 'bonded') ? 'b2c_platform' : trade;
+  if (type === 'individual_biz' && ['general','b2b_ecom','overseas_warehouse'].includes(t)) return true;
+  return false;
+}
+
+function getRuleKey(type, trade, amount, zone, taxpayer) {
+  const t = (trade === 'bonded') ? 'b2c_platform' : trade;
+  let suffix;
+  switch(t) {
+    case 'general': suffix = 'general'; break;
+    case 'b2c_platform': suffix = 'b2c'; break;
+    case 'b2b_ecom': suffix = 'b2b'; break;
+    case 'overseas_warehouse': suffix = '9810'; break;
+    case 'market_1039': suffix = '1039'; break;
+    default: suffix = t;
+  }
+  if (type === 'person') {
+    if (t === 'b2c_platform' && zone === 'yes') return 'person_b2c_zone_yes';
+    return 'person_other';
+  }
+  // Zone-based routing for B2C/Bonded
+  if (suffix === 'b2c' && zone) {
+    const zk = type + '_b2c_zone_' + zone;
+    if (RULES && RULES[zk]) return zk;
+  }
+  // Taxpayer-based routing for individual_biz + general/b2b/9810
+  if (type === 'individual_biz' && taxpayer && ['general','b2b','9810'].includes(suffix)) {
+    const tk = 'individual_biz_' + suffix + '_' + taxpayer;
+    if (RULES && RULES[tk]) return tk;
+  }
+  const key = type + '_' + suffix;
+  if (RULES && RULES[key]) return key;
+  if (RULES && RULES['default']) return 'default';
+  return null;
+}
+
+// Update trade options based on selected type
+function updateTradeOptions() {
+  const tradeCards = document.querySelectorAll('#step2 .option-card');
+  const personNotice = document.getElementById('personNotice');
+  if (state.type === 'person') {
+    // Gray out all except market_1039
+    tradeCards.forEach(card => {
+      const onclick = card.getAttribute('onclick') || '';
+      if (onclick.includes("'market_1039'")) {
+        card.classList.remove('disabled');
+      } else {
+        card.classList.add('disabled');
+      }
+    });
+    if (!personNotice) {
+      const notice = document.createElement('div');
+      notice.id = 'personNotice';
+      notice.className = 'person-notice';
+      notice.innerHTML = '<strong>⚠️ 提示：</strong>个人不能直接以个人身份开展跨境出口业务。仅"市场采购（1039）"模式在注册个体工商户后可适用。建议先注册市场主体（个体工商户或企业）。';
+      document.getElementById('step2').insertBefore(notice, document.getElementById('zoneQuestion'));
+    }
+  } else {
+    // Enable all
+    tradeCards.forEach(card => card.classList.remove('disabled'));
+    if (personNotice) personNotice.remove();
+  }
+}
+
+function selectOption(key, val, el) {
+  state[key] = val;
+  const grid = el.closest('.options-grid');
+  grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  if (key === 'type') {
+    document.getElementById('btn1').disabled = false;
+  }
+  if (key === 'trade') {
+    const needZone = needsZone(state.type, val);
+    const needTaxpayerQ = needsTaxpayer(state.type, val);
+    const zoneEl = document.getElementById('zoneQuestion');
+    const taxpayerEl = document.getElementById('taxpayerQuestion');
+    // Zone question
+    if (needZone) {
+      zoneEl.classList.remove('hidden');
+      state.zone = null;
+      zoneEl.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    } else {
+      zoneEl.classList.add('hidden');
+      state.zone = null;
+    }
+    // Taxpayer question
+    if (needTaxpayerQ) {
+      taxpayerEl.classList.remove('hidden');
+      state.taxpayer = null;
+      taxpayerEl.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    } else {
+      taxpayerEl.classList.add('hidden');
+      state.taxpayer = null;
+    }
+    // Enable/disable next button
+    if (needZone || needTaxpayerQ) {
+      document.getElementById('btn2').disabled = true;
+    } else {
+      document.getElementById('btn2').disabled = false;
+    }
+  }
+  if (key === 'zone') {
+    document.getElementById('btn2').disabled = false;
+  }
+  if (key === 'taxpayer') {
+    document.getElementById('btn2').disabled = false;
+  }
+}
+
+function checkAmount() {
+  const v = parseFloat(document.getElementById('amountInput').value);
+  state.amount = isNaN(v) ? null : v;
+}
+
+function goStep(n) {
+  [1,2,3].forEach(i => document.getElementById('step'+i).classList.add('hidden'));
+  document.getElementById('resultArea').classList.add('hidden');
+  document.getElementById('progressArea').classList.remove('hidden');
+  document.getElementById('step'+n).classList.remove('hidden');
+  updateProgress(n);
+  if (n === 2) updateTradeOptions();
+  if (n === 3) buildSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildSummary() {
+  const typeMap = {
+    factory:'🏭 工厂/生产企业', trading:'🏢 贸易公司', small:'🏪 小规模企业',
+    individual_biz:'👤 个体工商户', person:'🙋 个人', unsure:'❓ 不确定'
+  };
+  const tradeMap = {
+    general:'🚢 正式报关出口', b2c_platform:'📦 平台零售出口',
+    b2b_ecom:'🤝 跨境电商B2B', overseas_warehouse:'🏬 海外仓发货',
+    bonded:'🏛️ 保税仓出口', market_1039:'🏮 市场采购1039'
+  };
+  const zoneMap = { yes:'📍 综试区内', no:'📍 非综试区' };
+  const taxpayerMap = { gtax:'📋 一般纳税人', stax:'📌 小规模纳税人' };
+  const el = document.getElementById('selectionSummary');
+  let chips = `<span class="sel-chip">${typeMap[state.type]||state.type}</span><span class="sel-chip">${tradeMap[state.trade]||state.trade}</span>`;
+  if (state.zone) chips += `<span class="sel-chip">${zoneMap[state.zone]}</span>`;
+  if (state.taxpayer) chips += `<span class="sel-chip">${taxpayerMap[state.taxpayer]}</span>`;
+  if (state.amount) chips += `<span class="sel-chip">💰 ¥${state.amount.toLocaleString()}</span>`;
+  el.innerHTML = chips;
+}
+
+function updateProgress(step) {
+  ['dot1','dot2','dot3','dot4'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.className = 'step-dot';
+    if (i+1 < step) el.classList.add('done');
+    else if (i+1 === step) el.classList.add('active');
+    else el.classList.add('pending');
+  });
+  ['line1','line2','line3'].forEach((id,i) => {
+    document.getElementById(id).className = 'step-line' + (i+1 < step ? ' done' : '');
+  });
+}
+
+function showResult() {
+  const key = getRuleKey(state.type, state.trade, state.amount, state.zone, state.taxpayer);
+  let result;
+  if (key && RULES && RULES[key]) {
+    result = RULES[key];
+  } else {
+    result = getFallbackResult();
+  }
+
+  [1,2,3].forEach(i => document.getElementById('step'+i).classList.add('hidden'));
+  document.getElementById('progressArea').classList.add('hidden');
+
+  const sectionTitle = (icon, text) => '<div class="result-section-title">' + icon + ' ' + text + '</div>';
+  let html = '';
+
+  html += '<div class="result-card"><div class="result-verdict ' + result.verdict + '"><div class="verdict-icon">' + result.verdictIcon + '</div><div class="verdict-text"><h2>' + result.verdictTitle + '</h2><p>' + result.verdictDesc + '</p></div></div>';
+
+  if (result.invoices && result.invoices.length > 0) {
+    html += '<div class="result-section">' + sectionTitle('🧾','需要开具的发票');
+    result.invoices.forEach(inv => {
+      html += '<div class="invoice-box"><div class="invoice-label">' + inv.label + '</div><div class="invoice-value">' + inv.value + '</div><div class="invoice-note">' + inv.note + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  if (result.consequences && result.consequences.length > 0) {
+    html += '<div class="result-section">' + sectionTitle('⚠️','不开票的后果');
+    result.consequences.forEach(c => {
+      html += '<div class="consequence-item"><span class="consequence-icon">' + c.icon + '</span><span>' + c.text + '</span></div>';
+    });
+    html += '</div>';
+  }
+
+  if (result.tip) {
+    html += '<div class="result-section">' + sectionTitle('💡','提示') + '<div class="tip-box">' + result.tip + '</div></div>';
+  }
+
+  html += '</div>';
+
+  if (result.confusions && result.confusions.length > 0) {
+    html += '<div class="result-card">' + sectionTitle('💬','常见误解');
+    result.confusions.forEach(c => {
+      html += '<div class="confusion-box"><div class="q">' + c.q + '</div><div class="a">' + c.a + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  if (result.remedy) {
+    html += '<div class="result-card">' + sectionTitle('🔧','已经出口了但没开票？') + '<div class="tip-box" style="background:#fff8f8;border-color:#ffccbc;color:#5d1a00">' + result.remedy + '</div></div>';
+  }
+
+  html += '<div class="consult-banner"><p>本工具基于一般规则生成，您的实际合同结构、报关方式、资金路径可能影响最终结果。</p><strong>情况复杂？预约吴律师面谈，带齐材料一对一分析。</strong><div class="consult-btns"><a class="consult-btn consult-btn-fill" href="https://wuxiaomei-law.github.io/legal-consult/" target="_blank">在线咨询</a><a class="consult-btn consult-btn-outline" href="https://wuxiaomei-law.github.io/legal-consult/#lead" target="_blank">预约面谈</a></div></div>';
+  html += '<button class="btn-restart" onclick="restart()">🔄 重新查询</button>';
+
+  document.getElementById('resultArea').innerHTML = html;
+  document.getElementById('resultArea').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function getFallbackResult() {
+  return {
+    verdict: 'need', verdictIcon: '📋',
+    verdictTitle: '建议开具增值税普通发票（免税）',
+    verdictDesc: '出口业务建议都开具发票',
+    invoices: [{ label:'建议开具', value:'增值税普通发票（免税）', note:'税率填"免税"' }],
+    consequences: [{ icon:'⚠️', text:'不开票：可能被罚款' }],
+    tip: '规则库加载失败，显示仅供参考。请确保rules.json在同一目录下，或通过HTTP服务器访问本页面。',
+    confusions: [], remedy: null
+  };
+}
+
+function showZoneList() {
+  const modal = document.createElement('div');
+  modal.className = 'zone-list-modal';
+  modal.innerHTML = '<div class="zone-list-content"><h3>📍 跨境电商综试区（部分名单）</h3><p>截至2025年4月（第八批），全国已设立178个跨境电商综试区，覆盖31个省（区、市）。</p><p><strong>广东省：</strong>广州、深圳、珠海、东莞、佛山、中山、惠州、汕头、湛江、江门、肇庆、茂名、揭阳、潮州、阳江、韶关、清远、河源、梅州、汕尾、云浮</p><p><strong>浙江省：</strong>杭州、宁波、温州、湖州、嘉兴、绍兴、金华、衢州、舟山、台州、丽水、义乌</p><p><strong>江苏省：</strong>南京、无锡、徐州、常州、苏州、南通、连云港、淮安、盐城、扬州、镇江、泰州、宿迁</p><p><strong>福建省：</strong>福州、厦门、泉州、漳州、莆田、龙岩、宁德、三明、南平</p><p><strong>山东省：</strong>济南、青岛、烟台、潍坊、威海、日照、临沂、淄博、德州、聊城、滨州、菏泽、泰安、枣庄、东营、济宁</p><p><strong>其他主要城市：</strong>北京、上海、天津、重庆、成都、武汉、长沙、郑州、西安、合肥、南昌、昆明、贵阳、南宁、海口、兰州、银川、西宁、乌鲁木齐、呼和浩特、哈尔滨、长春、沈阳、大连、秦皇岛、保定、二连浩特、丹东、滁州、开封、新乡、鄂州、邵阳、梧州、北海、防城港、广安、博尔塔拉</p><p><strong>海南省：</strong>海南全岛（2025年4月新增，覆盖海口、三亚、儋州等19个市县）</p><p style="color:#888;font-size:12px;margin-top:12px">如不确定您所在城市是否在综试区，建议咨询当地商务局或选择"否/不确定"。</p><button class="zone-list-close" onclick="this.closest(\'.zone-list-modal\').remove()">知道了</button></div>';
+  document.body.appendChild(modal);
+}
+
+function restart() {
+  state.type = null; state.trade = null; state.amount = null; state.zone = null; state.taxpayer = null;
+  document.getElementById('amountInput').value = '';
+  ['btn1','btn2'].forEach(id => document.getElementById(id).disabled = true);
+  document.getElementById('zoneQuestion').classList.add('hidden');
+  document.getElementById('taxpayerQuestion').classList.add('hidden');
+  [1,2,3].forEach(i => {
+    const grids = document.querySelectorAll('#step'+i+' .options-grid');
+    grids.forEach(g => g.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected')));
+  });
+  document.getElementById('resultArea').classList.add('hidden');
+  goStep(1);
+}
+
+loadRules();
+</script>
+</body>
+</html>
