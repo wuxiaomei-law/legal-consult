@@ -1796,6 +1796,7 @@ function showResult() {
   document.getElementById('resultArea').innerHTML = html;
   document.getElementById('resultArea').classList.remove('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
+  notifyInvoiceUsage(result);
 }
 
 function getFallbackResult() {
@@ -1815,6 +1816,28 @@ function showZoneList() {
   modal.className = 'zone-list-modal';
   modal.innerHTML = '<div class="zone-list-content"><h3>📍 跨境电商综试区（部分名单）</h3><p>截至2025年4月（第八批），全国已设立178个跨境电商综试区，覆盖31个省（区、市）。</p><p><strong>广东省：</strong>广州、深圳、珠海、东莞、佛山、中山、惠州、汕头、湛江、江门、肇庆、茂名、揭阳、潮州、阳江、韶关、清远、河源、梅州、汕尾、云浮</p><p><strong>浙江省：</strong>杭州、宁波、温州、湖州、嘉兴、绍兴、金华、衢州、舟山、台州、丽水、义乌</p><p><strong>江苏省：</strong>南京、无锡、徐州、常州、苏州、南通、连云港、淮安、盐城、扬州、镇江、泰州、宿迁</p><p><strong>福建省：</strong>福州、厦门、泉州、漳州、莆田、龙岩、宁德、三明、南平</p><p><strong>山东省：</strong>济南、青岛、烟台、潍坊、威海、日照、临沂、淄博、德州、聊城、滨州、菏泽、泰安、枣庄、东营、济宁</p><p><strong>其他主要城市：</strong>北京、上海、天津、重庆、成都、武汉、长沙、郑州、西安、合肥、南昌、昆明、贵阳、南宁、海口、兰州、银川、西宁、乌鲁木齐、呼和浩特、哈尔滨、长春、沈阳、大连、秦皇岛、保定、二连浩特、丹东、滁州、开封、新乡、鄂州、邵阳、梧州、北海、防城港、广安、博尔塔拉</p><p><strong>海南省：</strong>海南全岛（2025年4月新增，覆盖海口、三亚、儋州等19个市县）</p><p style="color:#888;font-size:12px;margin-top:12px">如不确定您所在城市是否在综试区，建议咨询当地商务局或选择"否/不确定"。</p><button class="zone-list-close" onclick="this.closest(\'.zone-list-modal\').remove()">知道了</button></div>';
   document.body.appendChild(modal);
+}
+
+function notifyInvoiceUsage(result) {
+  const API_URL = 'https://1436174324-l1tvdn0f6b.ap-guangzhou.tencentscf.com';
+  const payload = {
+    type: 'invoice',
+    data: {
+      type: state.type,
+      trade: state.trade,
+      zone: state.zone,
+      taxpayer: state.taxpayer,
+      amount: state.amount,
+      verdictTitle: result.verdictTitle,
+      verdictDesc: result.verdictDesc,
+      verdict: result.verdict
+    }
+  };
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {}); // 静默失败，不影响用户体验
 }
 
 function restart() {
