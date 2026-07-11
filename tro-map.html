@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>TRO 21天作战地图</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background: #f4f6fa;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 20px 18px 32px;
+            box-shadow: 0 20px 60px rgba(26, 42, 74, 0.08);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a2a4a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subhead {
+            color: #4a5a7a;
+            font-size: 13px;
+            margin: 2px 0 18px 0;
+            background: #f0f2f8;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border-left: 3px solid #1a4a8a;
+        }
+
+        .date-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .date-input-area .label-line {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a4a;
+        }
+        .date-input-area .label-line .hint {
+            font-weight: 400;
+            color: #6a7a9a;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+        .date-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .date-input-row input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid #c8d2e0;
+            border-radius: 16px;
+            font-size: 15px;
+            background: white;
+            color: #1a2a4a;
+        }
+        .date-input-row input:focus {
+            border-color: #1a4a8a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 74, 138, 0.12);
+        }
+        .date-input-row button {
+            padding: 12px 18px;
+            background: #1a4a8a;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .date-input-row button:hover {
+            background: #1a2a4a;
+        }
+        .date-input-row button:active {
+            transform: scale(0.96);
+        }
+
+        .position-card {
+            background: #1a2a4a;
+            border-radius: 20px;
+            padding: 18px 20px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .position-card .phase-name {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .position-card .phase-name .badge {
+            font-size: 12px;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+        .position-card .days-left {
+            font-size: 13px;
+            opacity: 0.75;
+            margin: 2px 0 10px 0;
+        }
+        .position-card .mission {
+            font-size: 14px;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 12px 14px;
+            border-radius: 12px;
+            border-left: 3px solid #7a9fd8;
+        }
+
+        .map-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a2a4a;
+            margin: 20px 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .phase-block {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .phase-block.completed {
+            background: #eef5ef;
+            border-color: #8ab89a;
+            opacity: 0.75;
+        }
+        .phase-block.active {
+            background: #eaf0fa;
+            border-color: #1a4a8a;
+            box-shadow: 0 0 0 2px rgba(26, 74, 138, 0.15);
+        }
+        .phase-block.inactive {
+            opacity: 0.45;
+        }
+
+        .phase-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .phase-head .title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a2a4a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .phase-head .title .day-range {
+            font-weight: 400;
+            font-size: 11px;
+            color: #6a7a9a;
+        }
+        .status-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 30px;
+            background: #e2e8f0;
+            color: #4a5a7a;
+            flex-shrink: 0;
+        }
+        .status-tag.active {
+            background: #1a4a8a;
+            color: white;
+        }
+        .phase-block .tasks {
+            font-size: 13px;
+            color: #1a2a4a;
+            line-height: 1.6;
+            padding-left: 6px;
+            margin-top: 4px;
+        }
+        .phase-block .tasks li {
+            list-style: none;
+            padding: 3px 0;
+        }
+        .phase-block .tasks li::before {
+            content: "▸ ";
+            color: #8a9aba;
+        }
+        .phase-block.completed .tasks li::before {
+            content: "✓ ";
+            color: #3a7a5a;
+        }
+        .phase-note {
+            font-size: 11px;
+            color: #9a8a5a;
+            margin-top: 6px;
+            font-style: normal;
+        }
+
+        .qr-section {
+            margin-top: 20px;
+            padding: 18px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1px dashed #c8d2e0;
+            text-align: center;
+        }
+        .qr-section .qr-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a4a;
+            margin-bottom: 10px;
+        }
+        .qr-section .qr-hint {
+            font-size: 12px;
+            color: #6a7a9a;
+            margin-bottom: 12px;
+        }
+        #qrcode {
+            display: inline-block;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        #qrcode img {
+            display: block;
+            margin: 0 auto;
+        }
+        .qr-section .save-hint {
+            font-size: 11px;
+            color: #8a9aba;
+            margin-top: 10px;
+        }
+
+        /* ===== 底部联系方式（精简版） ===== */
+        .footer-contact {
+            margin-top: 24px;
+            padding: 16px 18px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e8edf5;
+            background: #fafbfd;
+        }
+        .footer-contact .team-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1a2a4a;
+            margin-bottom: 4px;
+        }
+        .footer-contact .wechat-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .footer-contact .wechat-row .qrcode-mini {
+            width: 56px;
+            height: 56px;
+            background: #e8edf5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .footer-contact .wechat-row .qrcode-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .footer-contact .wechat-row .qrcode-mini .placeholder {
+            font-size: 28px;
+            opacity: 0.5;
+        }
+        .footer-contact .wechat-row .label {
+            font-size: 13px;
+            color: #4a5a7a;
+        }
+        .footer-contact .wechat-row .label strong {
+            color: #1a4a8a;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #8a9aba;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        /* ===== 弹窗（加微信引导） ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 42, 74, 0.55);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            max-width: 420px;
+            width: 100%;
+            border-radius: 28px;
+            padding: 32px 24px 28px;
+            box-shadow: 0 40px 80px rgba(26, 42, 74, 0.2);
+            animation: modalFade 0.3s ease;
+            text-align: center;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-box h2 {
+            font-size: 20px;
+            color: #1a2a4a;
+            margin-bottom: 6px;
+        }
+        .modal-box .desc {
+            font-size: 14px;
+            color: #5a6a8a;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+        .modal-box .wx-qr {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 14px;
+            background: #f0f2f8;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .modal-box .wx-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .modal-box .wx-id {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a4a8a;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .modal-box .wx-tip {
+            font-size: 12px;
+            color: #8a9aba;
+            margin-bottom: 18px;
+        }
+        .modal-box .input-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+        .modal-box .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a2a4a;
+            margin-bottom: 4px;
+        }
+        .modal-box .input-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #c8d2e0;
+            border-radius: 14px;
+            font-size: 15px;
+            background: white;
+            color: #1a2a4a;
+        }
+        .modal-box .input-group input:focus {
+            border-color: #1a4a8a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 74, 138, 0.1);
+        }
+        .modal-box .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #1a4a8a;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 4px;
+        }
+        .modal-box .btn-primary:hover { background: #1a2a4a; }
+        .modal-box .btn-primary:active { transform: scale(0.97); }
+        .modal-box .btn-primary.loading { opacity: 0.6; pointer-events: none; }
+        .modal-box .skip-link {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            color: #8a9aba;
+            margin-top: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .modal-box .skip-link:hover { color: #1a4a8a; }
+        .modal-box .privacy-note {
+            font-size: 11px;
+            color: #8a9aba;
+            text-align: center;
+            margin-top: 14px;
+            border-top: 1px solid #f0f2f8;
+            padding-top: 14px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a2a4a;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(26, 42, 74, 0.2);
+            animation: toastIn 0.4s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast.success { border-left: 4px solid #4a9a6a; }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* ===== 截屏水印层（跟随内容，转发即带广告） ===== */
+        #mapContainer { position: relative; }
+        .map-watermark {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        .map-watermark .wm-row {
+            white-space: nowrap;
+            font-size: 15px;
+            font-weight: 700;
+            color: rgba(26, 74, 138, 0.10);
+            transform: rotate(-24deg);
+            line-height: 3.4;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .date-input-row { flex-wrap: wrap; }
+            .date-input-row button { width: 100%; }
+            .modal-box { padding: 24px 18px; }
+            .footer-contact .wechat-row { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>🗺️ TRO 作战地图</h1>
+        <div class="subhead">📍 完整时间线 + 当前所在位置，不再遗漏任何一步</div>
+
+        <!-- 日期输入 -->
+        <div class="date-input-area">
+            <div class="label-line">
+                📅 收到 TRO 通知的日期
+                <span class="hint">填你实际收到法院/平台通知的那天，不是今天。日期决定倒计时是否准确。</span>
+            </div>
+            <div class="date-input-row">
+                <input type="date" id="troDate" placeholder="例如 2026-06-20">
+                <button id="generateBtn">🚀 生成作战时间线</button>
+            </div>
+        </div>
+
+        <!-- 当前位置 -->
+        <div class="position-card" id="positionCard">
+            <div class="phase-name">
+                <span id="currentPhaseName">等待输入</span>
+                <span class="badge" id="currentPhaseBadge">--</span>
+            </div>
+            <div class="days-left" id="daysLeftDisplay">剩余 -- 天</div>
+            <div class="mission" id="currentMission">请填写收到 TRO 的日期</div>
+        </div>
+
+        <!-- 地图 -->
+        <div class="map-title">📋 完整作战时间线</div>
+        <div id="mapContainer"></div>
+
+        <!-- 二维码分享 -->
+        <div class="qr-section">
+            <div class="qr-label">📲 分享给跨境卖家朋友</div>
+            <div class="qr-hint">部署到网站/服务器后，此处自动生成二维码；本地双击打开时请直接转发本文件。</div>
+            <div id="qrcode"></div>
+            <div class="save-hint">💡 可截图保存，发到朋友圈或卖家群</div>
+        </div>
+
+        <!-- ===== 底部联系方式（精简） ===== -->
+        <div class="footer-contact">
+            <div class="team-name">⚖️ 吴晓梅 跨境律师团队 广东法制盛邦律师事务所</div>
+            <div class="wechat-row">
+                <div class="qrcode-mini" id="wechatQrPlaceholder">
+                    <span class="placeholder">📱</span>
+                </div>
+                <div class="label">
+                    长按识别二维码<br><strong>添加微信 · 咨询更快</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            ⚖️ 本工具仅用于时间线管理，具体策略请咨询律师。文中金额与天数均为经验参考，非法律标准，以法院文书为准。
+        </div>
+    </div>
+
+    <!-- ===== 加微信引导弹窗 ===== -->
+    <div class="modal-overlay" id="leadModal">
+        <div class="modal-box">
+            <h2>📋 查看完整作战地图</h2>
+            <div class="desc">
+                添加吴律师微信，即可获取 <strong>21天作战时间线</strong> 与一对一策略评估。
+            </div>
+
+            <!-- 微信二维码：把下方 src 换成你的微信二维码图片路径即可 -->
+            <div class="wx-qr" id="wxQr">
+                <span style="font-size:28px;opacity:0.5;">📱</span>
+            </div>
+            <div class="wx-id" id="wxId">微信号：请替换</div>
+            <div class="wx-tip">长按上方二维码添加微信</div>
+
+            <button class="btn-primary" id="submitBtn" onclick="submitLead()">✅ 我已添加，查看作战地图</button>
+            <div class="privacy-note">
+                🔒 本工具在本地运行，信息不会自动上传。添加微信后请主动发送店铺信息以便跟进。
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  微信信息（只需在此处修改一次，全站三处入口自动同步）
+        // ============================================================
+        const WECHAT_ID = 'elxiaomei';     // 吴律师工作微信号
+        const WECHAT_QR_IMG = 'wechat-qr.jpg';  // 微信二维码图片（同目录）
+
+        // ============================================================
+        //  阶段定义
+        // ============================================================
+        const PHASES = [{
+            id: 'phase1',
+            label: '🟢 黄金72小时',
+            daysRange: '第 1-3 天',
+            daysMin: 19,
+            daysMax: 21,
+            mission: '稳住阵脚，锁住所有销售数据与证据',
+            tasks: [
+                '🛑 立即暂停涉案商品ID（ASIN / Item ID）及所有关联变体的销售',
+                '📁 导出该商品近3个月的所有订单与销售数据（Excel / CSV）',
+                '📧 保存法院传票、原告律所的全部邮件（含垃圾箱）',
+                '🚫 切勿直接回复原告邮件——你的每一句话都可能成为法庭证据'
+            ]
+        }, {
+            id: 'phase2',
+            label: '🟡 决策窗口期',
+            daysRange: '第 4-10 天',
+            daysMin: 11,
+            daysMax: 18,
+            mission: '计算"弃店成本" vs "和解成本"，确定核心策略',
+            tasks: [
+                '🧮 计算弃店成本：冻结资金 + 库存货值 + 品牌积累价值',
+                '⚖️ 冻结额 < $3,000（经验参考，非法律标准）→ 可尝试自行谈判；更高 → 启动律师筛选',
+                '📅 距初步禁令（PI）听证会约剩7天，提前准备抗辩理由',
+                '🔍 调查原告律所历史案件风格（GBC / Keith / David 等）'
+            ]
+        }, {
+            id: 'phase3',
+            label: '🟠 最后冲刺期',
+            daysRange: '第 11-17 天',
+            daysMin: 4,
+            daysMax: 10,
+            mission: '全力推进谈判，或准备应诉文书',
+            tasks: [
+                '💬 若谈判僵持，明确告知对方"我方已准备应诉材料"施压',
+                '📄 若决定应诉，今日启动《答辩状》初稿撰写',
+                '📞 与美国本地律师召开电话会议，确认最终策略',
+                '📩 整理所有与原告律所的沟通记录，作为后续证据'
+            ]
+        }, {
+            id: 'phase4',
+            label: '🔴 生死倒计时',
+            daysRange: '第 18-21 天',
+            daysMin: 1,
+            daysMax: 3,
+            mission: '48小时内必须做出最终选择',
+            tasks: [
+                '✍️ 今日必须签署和解协议（如需）并支付和解金',
+                '⚖️ 或向美国联邦法院正式提交应诉文件（Answer）',
+                '💸 或确认弃店，承认冻结资金损失',
+                '📌 缺席判决 → 资金全额划走，店铺永久封禁'
+            ]
+        }];
+
+        const PHASE_EXPIRED = {
+            id: 'expired',
+            label: '⚫ 窗口已关闭',
+            daysRange: '超过21天',
+            daysMin: 0,
+            daysMax: 0,
+            mission: '确认是否已缺席判决，评估补救可能',
+            note: '注：Schedule A 案件原告常申请延长 TRO，实际窗口可能超过21天，以法院文书为准。',
+            tasks: [
+                '📨 登录 PACER 系统查询案件最新状态',
+                '📞 联系美国律师确认是否有补救可能（如申请撤销缺席判决）',
+                '💳 若资金已被划走，确认是否需跨境追索'
+            ]
+        };
+
+        // ============================================================
+        //  核心函数
+        // ============================================================
+        function getPhase(daysLeft) {
+            if (daysLeft <= 0) return { ...PHASE_EXPIRED, isExpired: true };
+            for (const p of PHASES) {
+                if (daysLeft >= p.daysMin && daysLeft <= p.daysMax) {
+                    return { ...p, isExpired: false };
+                }
+            }
+            return { ...PHASES[0], isExpired: false };
+        }
+
+        function renderMap() {
+            const dateInput = document.getElementById('troDate').value;
+
+            const received = new Date(dateInput + 'T00:00:00');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const deadline = new Date(received);
+            deadline.setDate(deadline.getDate() + 21);
+
+            let daysLeft = Math.ceil((deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+            daysLeft = Math.max(0, daysLeft);
+
+            document.getElementById('daysLeftDisplay').innerText = `剩余 ${daysLeft} 天`;
+
+            const current = getPhase(daysLeft);
+            document.getElementById('currentPhaseName').innerText = current.label;
+            document.getElementById('currentPhaseBadge').innerText = current.daysRange;
+            document.getElementById('currentMission').innerHTML = `🎯 ${current.mission}`;
+
+            const container = document.getElementById('mapContainer');
+            container.innerHTML = '';
+
+            // 铺一层随内容延展的水印：谁截屏转发，都自动带上律师品牌+微信
+            const wm = document.createElement('div');
+            wm.className = 'map-watermark';
+            const wmText = `吴晓梅跨境律师 · 微信 ${WECHAT_ID} · 完整工具请扫码 &nbsp;&nbsp;&nbsp;`;
+            let wmRows = '';
+            for (let i = 0; i < 14; i++) {
+                wmRows += `<div class="wm-row">${wmText.repeat(4)}</div>`;
+            }
+            wm.innerHTML = wmRows;
+            container.appendChild(wm);
+
+            const allPhases = [...PHASES, { ...PHASE_EXPIRED, isExpired: true }];
+
+            allPhases.forEach((p) => {
+                const isActive = !p.isExpired && (p.id === current.id);
+
+                let isCompleted = false;
+                if (!p.isExpired) {
+                    const curIdx = PHASES.findIndex(pp => pp.id === current.id);
+                    const thisIdx = PHASES.findIndex(pp => pp.id === p.id);
+                    if (curIdx > 0 && thisIdx < curIdx) isCompleted = true;
+                    if (current.isExpired) isCompleted = true;
+                }
+                if (current.isExpired && !p.isExpired) isCompleted = true;
+
+                let isInactive = false;
+                if (!p.isExpired && !isActive && !isCompleted) isInactive = true;
+                if (p.isExpired && !current.isExpired) isInactive = true;
+
+                let className = 'phase-block';
+                if (isCompleted) className += ' completed';
+                if (isActive) className += ' active';
+                if (isInactive) className += ' inactive';
+
+                let statusText = '未开始';
+                if (isCompleted) statusText = '✅ 已完成';
+                if (isActive) statusText = '📍 进行中';
+
+                const noteHtml = p.note ? `<div class="phase-note">${p.note}</div>` : '';
+
+                const block = document.createElement('div');
+                block.className = className;
+                block.innerHTML = `
+                            <div class="phase-head">
+                                <span class="title">
+                                    ${p.label}
+                                    <span class="day-range">${p.daysRange}</span>
+                                </span>
+                                <span class="status-tag ${isActive ? 'active' : ''}">${statusText}</span>
+                            </div>
+                            <ul class="tasks">
+                                ${p.tasks.map(t => `<li>${t}</li>`).join('')}
+                            </ul>
+                            ${noteHtml}
+                        `;
+                container.appendChild(block);
+            });
+        }
+
+        // ============================================================
+        //  加微信引导逻辑
+        // ============================================================
+        function showModal() {
+            document.getElementById('leadModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').classList.remove('show');
+        }
+
+        function showToast(message, type = 'success') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        function submitLead() {
+            // 不再留资：扫码加微信即视为进入私域，点此直接解锁地图
+            closeModal();
+            renderMap();
+            showToast('✅ 作战地图已解锁！添加微信可获取一对一评估。', 'success');
+        }
+
+        // ============================================================
+        //  生成二维码
+        // ============================================================
+        function generateQRCode() {
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+
+            let url = window.location.href;
+            if (url.startsWith('file://')) {
+                qrContainer.innerHTML =
+                    '<div style="padding:20px; color:#8a9aba; font-size:13px;">📌 本地打开：请直接转发本文件；<br>部署到服务器后此处自动生成二维码</div>';
+                return;
+            }
+
+            try {
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 150,
+                    height: 150,
+                    colorDark: "#1a2a4a",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch (e) {
+                qrContainer.innerHTML =
+                    '<div style="padding:20px; color:#c04a4a; font-size:13px;">⚠️ 二维码生成失败，请检查网络</div>';
+            }
+        }
+
+        // ============================================================
+        //  初始化
+        // ============================================================
+        window.onload = function() {
+            // 关键修正：troDate 不默认今天，留空让用户填真实收到日期
+            document.getElementById('troDate').value = '';
+
+            // 统一填充微信信息（弹窗 + 底部）——只需改顶部 WECHAT_ID / WECHAT_QR_IMG 两个常量
+            document.getElementById('wxId').innerText = '微信号：' + WECHAT_ID;
+            if (WECHAT_QR_IMG) {
+                document.getElementById('wxQr').innerHTML = '<img src="' + WECHAT_QR_IMG + '">';
+                document.getElementById('wechatQrPlaceholder').innerHTML = '<img src="' + WECHAT_QR_IMG + '">';
+            }
+
+            setTimeout(generateQRCode, 300);
+
+            document.getElementById('generateBtn').addEventListener('click', function() {
+                const dateInput = document.getElementById('troDate').value;
+                if (!dateInput) {
+                    alert('请先填写收到 TRO 通知的日期，倒计时才准确。');
+                    return;
+                }
+                showModal();   // 引导加微信，提交/跳过均解锁地图
+            });
+        };
+    </script>
+
+</body>
+</html>
