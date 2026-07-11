@@ -244,7 +244,7 @@
   </div>
 </section>
 
-<!-- Invoice Checker Entry -->
+<!-- Tools Entry (发票自查 + TRO 作战地图) -->
 <section class="section">
   <div class="invoice-entry">
     <div class="invoice-entry-icon">🧾</div>
@@ -253,6 +253,14 @@
       <div class="invoice-entry-desc">不确定出口要不要开票？30秒快速判断</div>
     </div>
     <a class="invoice-entry-btn" href="invoice-checker.html">开始自查 →</a>
+  </div>
+  <div class="invoice-entry" style="margin-top:16px;">
+    <div class="invoice-entry-icon">🗺️</div>
+    <div class="invoice-entry-text">
+      <div class="invoice-entry-title">美国 TRO 封店 · 21天作战地图</div>
+      <div class="invoice-entry-desc">被冻结账户？填日期算算你还剩几天、现在该做什么</div>
+    </div>
+    <a class="invoice-entry-btn" href="tro-map.html">查看地图 →</a>
   </div>
 </section>
 
@@ -876,10 +884,10 @@ async function callDeepSeekConcurrent(userQuestion) {
   try {
     // 同时发起 KB 查询和 DeepSeek 调用（竞速模式）
     const kbPromise = fetchKBContext(userQuestion);
-    
+
     // DeepSeek 调用（不等 KB）
     const baseSystem = getSystemPrompt() + getTopicsPrompt();
-    
+
     const deepseekPromise = fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1236,7 +1244,5 @@ function toggleVoice() {
   }
 }
 </script>
-</body>
-</html>
 </body>
 </html>
