@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>TRO 21天作战地图</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
-    </script>
     <style>
         * {
             margin: 0;
@@ -545,7 +543,7 @@
         <!-- 二维码分享 -->
         <div class="qr-section">
             <div class="qr-label">📲 分享给跨境卖家朋友</div>
-            <div class="qr-hint">部署到网站/服务器后，此处自动生成二维码；本地双击打开时请直接转发本文件。</div>
+            <div class="qr-hint">扫码或复制链接，把工具发给跨境卖家朋友。</div>
             <div id="qrcode"></div>
             <div class="save-hint">💡 可截图保存，发到朋友圈或卖家群</div>
         </div>
@@ -595,7 +593,7 @@
         //  微信信息（只需在此处修改一次，全站三处入口自动同步）
         // ============================================================
         const WECHAT_ID = 'elxiaomei';     // 吴律师工作微信号
-        const WECHAT_QR_IMG = 'wechat-qr.jpg';  // 微信二维码图片（同目录）
+        const WECHAT_QR_IMG = 'https://wuxiaomei-law.github.io/legal-consult/wechat-qr.jpg';  // 微信二维码图片（绝对地址，避免路径错位导致扫出错误内容）
 
         // ============================================================
         //  阶段定义
@@ -793,31 +791,28 @@
         }
 
         // ============================================================
-        //  生成二维码
+        //  生成分享二维码（静态图片，不依赖任何外部 CDN，国内稳定可用）
         // ============================================================
+        const SHARE_URL = 'https://wuxiaomei-law.github.io/legal-consult/tro-map.html';
+
         function generateQRCode() {
             const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
+            // 二维码为预生成的静态图片 tro-map-qr.png，扫码即打开本工具
+            qrContainer.innerHTML =
+                '<img src="tro-map-qr.png" alt="分享二维码" style="width:150px;height:150px;border-radius:8px;display:block;margin:0 auto;">' +
+                '<div style="font-size:12px;color:#6a7a9a;margin-top:10px;word-break:break-all;line-height:1.5;">' + SHARE_URL + '</div>' +
+                '<button onclick="copyShareLink()" style="margin-top:10px;padding:8px 16px;border:none;border-radius:30px;background:#1a4a8a;color:#fff;font-size:13px;cursor:pointer;">📋 复制链接</button>';
+        }
 
-            let url = window.location.href;
-            if (url.startsWith('file://')) {
-                qrContainer.innerHTML =
-                    '<div style="padding:20px; color:#8a9aba; font-size:13px;">📌 本地打开：请直接转发本文件；<br>部署到服务器后此处自动生成二维码</div>';
-                return;
-            }
-
-            try {
-                new QRCode(qrContainer, {
-                    text: url,
-                    width: 150,
-                    height: 150,
-                    colorDark: "#1a2a4a",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
+        function copyShareLink() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(SHARE_URL).then(function () {
+                    showToast('✅ 链接已复制，发给朋友即可', 'success');
+                }).catch(function () {
+                    showToast('复制失败，请长按上方链接手动复制', 'success');
                 });
-            } catch (e) {
-                qrContainer.innerHTML =
-                    '<div style="padding:20px; color:#c04a4a; font-size:13px;">⚠️ 二维码生成失败，请检查网络</div>';
+            } else {
+                showToast('请长按上方链接手动复制', 'success');
             }
         }
 
